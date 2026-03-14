@@ -1,251 +1,376 @@
-<laravel-boost-guidelines>
-=== foundation rules ===
+# Metin2 Ignition - Claude Code Instructions
 
-# Laravel Boost Guidelines
+## Project Overview
 
-The Laravel Boost guidelines are specifically curated by Laravel maintainers for this application. These guidelines should be followed closely to ensure the best experience when building Laravel applications.
+Laravel 12 + Filament 3 web platform for **Metin2 Ignition** private server.
+- Public site: download, ranking, news, registration
+- Admin panel (Filament): player management, events, accounts, CMS
 
-## Foundational Context
+---
 
-This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
+## Stack
 
-- php - 8.4.18
-- laravel/framework (LARAVEL) - v12
-- laravel/prompts (PROMPTS) - v0
-- livewire/livewire (LIVEWIRE) - v4
-- laravel/boost (BOOST) - v2
-- laravel/mcp (MCP) - v0
-- laravel/pail (PAIL) - v1
-- laravel/pint (PINT) - v1
-- laravel/sail (SAIL) - v1
-- phpunit/phpunit (PHPUNIT) - v11
+| Layer       | Technology                          |
+|-------------|-------------------------------------|
+| Framework   | Laravel 12                          |
+| Admin panel | Filament 3                          |
+| PHP         | 8.4                                 |
+| DB (web)    | MySQL/MariaDB — `metin2_web` on Ubuntu host |
+| DB (game)   | MariaDB 10.6 on FreeBSD VM (remote) |
+| OS          | Ubuntu Linux (web host)             |
+| Code style  | PSR-12                              |
 
-## Skills Activation
+---
 
-This project has domain-specific skills available. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
+## Database Layout
 
-- `livewire-development` — Develops reactive Livewire 4 components. Activates when creating, updating, or modifying Livewire components; working with wire:model, wire:click, wire:loading, or any wire: directives; adding real-time updates, loading states, or reactivity; debugging component behavior; writing Livewire tests; or when the user mentions Livewire, component, counter, or reactive UI.
+```
+FreeBSD VM (game server)         Ubuntu host (web server)
+────────────────────────         ────────────────────────
+account      ← remote read/write  metin2_web  ← local
+player       ← remote read/write    └── admins        (Filament admin users)
+common       ← remote read-only     └── sessions
+log          ← remote read-only     └── cache
+hotbackup    ← remote read-only     └── (any future web-only tables)
+```
 
-## Conventions
+**Nothing is added to the FreeBSD VM databases.** `metin2_web` is a small local database on the Ubuntu host, owned entirely by Laravel.
 
-- You must follow all existing code conventions used in this application. When creating or editing a file, check sibling files for the correct structure, approach, and naming.
-- Use descriptive names for variables and methods. For example, `isRegisteredForDiscounts`, not `discount()`.
-- Check for existing components to reuse before writing a new one.
+---
 
-## Verification Scripts
+## Authentication — Two Separate Mechanisms
 
-- Do not create verification scripts or tinker when tests cover that functionality and prove they work. Unit and feature tests are more important.
+### 1. Players — site login/register (`/login`, `/register`)
 
-## Application Structure & Architecture
+- **Source:** `account.accounts` on the FreeBSD VM (remote)
+- **Guard:** custom guard named `metin2`, uses `App\Models\Metin2\Account`
+- **Password:** MySQL `PASSWORD()` — always use `mysqlPassword($password)`, never `Hash::make()` or `md5()`
+- **Session:** stored in `metin2_web.sessions`
+- **Registration** creates a new row in `account.accounts` directly
 
-- Stick to existing directory structure; don't create new base folders without approval.
-- Do not change the application's dependencies without approval.
+### 2. Admins — Filament panel (`/admin`)
 
-## Frontend Bundling
+- **Source:** `metin2_web.admins` on the Ubuntu host (local)
+- **Guard:** default Laravel `web` guard, uses `App\Models\Web\Admin`
+- **Password:** bcrypt via `Hash::make()` — standard Laravel
+- **Created** via `php artisan make:filament-user` or seeder
 
-- If the user doesn't see a frontend change reflected in the UI, it could mean they need to run `npm run build`, `npm run dev`, or `composer run dev`. Ask them.
+The two guards are completely independent. A player account does not grant admin access.
 
-## Documentation Files
+---
 
-- You must only create documentation files if explicitly requested by the user.
+## Guard Configuration
 
-## Replies
+### config/auth.php
 
-- Be concise in your explanations - focus on what's important rather than explaining obvious details.
-
-=== boost rules ===
-
-# Laravel Boost
-
-- Laravel Boost is an MCP server that comes with powerful tools designed specifically for this application. Use them.
-
-## Artisan Commands
-
-- Run Artisan commands directly via the command line (e.g., `php artisan route:list`, `php artisan tinker --execute "..."`).
-- Use `php artisan list` to discover available commands and `php artisan [command] --help` to check parameters.
-
-## URLs
-
-- Whenever you share a project URL with the user, you should use the `get-absolute-url` tool to ensure you're using the correct scheme, domain/IP, and port.
-
-## Debugging
-
-- Use the `database-query` tool when you only need to read from the database.
-- Use the `database-schema` tool to inspect table structure before writing migrations or models.
-- To execute PHP code for debugging, run `php artisan tinker --execute "your code here"` directly.
-- To read configuration values, read the config files directly or run `php artisan config:show [key]`.
-- To inspect routes, run `php artisan route:list` directly.
-- To check environment variables, read the `.env` file directly.
-
-## Reading Browser Logs With the `browser-logs` Tool
-
-- You can read browser logs, errors, and exceptions using the `browser-logs` tool from Boost.
-- Only recent browser logs will be useful - ignore old logs.
-
-## Searching Documentation (Critically Important)
-
-- Boost comes with a powerful `search-docs` tool you should use before trying other approaches when working with Laravel or Laravel ecosystem packages. This tool automatically passes a list of installed packages and their versions to the remote Boost API, so it returns only version-specific documentation for the user's circumstance. You should pass an array of packages to filter on if you know you need docs for particular packages.
-- Search the documentation before making code changes to ensure we are taking the correct approach.
-- Use multiple, broad, simple, topic-based queries at once. For example: `['rate limiting', 'routing rate limiting', 'routing']`. The most relevant results will be returned first.
-- Do not add package names to queries; package information is already shared. For example, use `test resource table`, not `filament 4 test resource table`.
-
-### Available Search Syntax
-
-1. Simple Word Searches with auto-stemming - query=authentication - finds 'authenticate' and 'auth'.
-2. Multiple Words (AND Logic) - query=rate limit - finds knowledge containing both "rate" AND "limit".
-3. Quoted Phrases (Exact Position) - query="infinite scroll" - words must be adjacent and in that order.
-4. Mixed Queries - query=middleware "rate limit" - "middleware" AND exact phrase "rate limit".
-5. Multiple Queries - queries=["authentication", "middleware"] - ANY of these terms.
-
-=== php rules ===
-
-# PHP
-
-- Always use curly braces for control structures, even for single-line bodies.
-
-## Constructors
-
-- Use PHP 8 constructor property promotion in `__construct()`.
-    - `public function __construct(public GitHub $github) { }`
-- Do not allow empty `__construct()` methods with zero parameters unless the constructor is private.
-
-## Type Declarations
-
-- Always use explicit return type declarations for methods and functions.
-- Use appropriate PHP type hints for method parameters.
-
-<!-- Explicit Return Types and Method Params -->
 ```php
-protected function isAccessible(User $user, ?string $path = null): bool
+'guards' => [
+    'web' => [                          // Filament admin
+        'driver'   => 'session',
+        'provider' => 'admins',
+    ],
+    'metin2' => [                       // Site players
+        'driver'   => 'session',
+        'provider' => 'metin2_accounts',
+    ],
+],
+
+'providers' => [
+    'admins' => [
+        'driver' => 'eloquent',
+        'model'  => App\Models\Web\Admin::class,
+    ],
+    'metin2_accounts' => [
+        'driver' => 'eloquent',
+        'model'  => App\Models\Metin2\Account::class,
+    ],
+],
+```
+
+### app/Models/Metin2/Account.php
+
+```php
+class Account extends Authenticatable
 {
-    ...
+    protected $connection = 'account';
+    protected $table = 'accounts';
+    public $timestamps = false;
+
+    protected $fillable = ['login', 'password', 'email', 'social_id'];
+    protected $hidden = ['password'];
+
+    // MD5 password check — override default bcrypt behaviour
+    public function getAuthPassword(): string
+    {
+        return $this->password;
+    }
 }
 ```
 
-## Enums
+### Custom MySQL Password Hasher — app/Hashing/MysqlPasswordHasher.php
 
-- Typically, keys in an Enum should be TitleCase. For example: `FavoritePerson`, `BestLake`, `Monthly`.
+Replicates MySQL's `PASSWORD()` function: `'*' . strtoupper(sha1(sha1($value, true)))`
+Produces a 41-char hash starting with `*` — identical to what the game server stores.
 
-## Comments
+```php
+class MysqlPasswordHasher implements Hasher
+{
+    public function make($value, array $options = []): string
+    {
+        return '*' . strtoupper(sha1(sha1($value, true)));
+    }
 
-- Prefer PHPDoc blocks over inline comments. Never use comments within the code itself unless the logic is exceptionally complex.
+    public function check($value, $hashedValue, array $options = []): bool
+    {
+        return $this->make($value) === strtoupper($hashedValue);
+    }
 
-## PHPDoc Blocks
+    public function needsRehash($hashedValue, array $options = []): bool
+    {
+        return false;
+    }
+}
+```
 
-- Add useful array shape type definitions when appropriate.
+Register in `AppServiceProvider::register()`:
+```php
+$this->app->when(\App\Http\Controllers\Auth\LoginController::class)
+    ->needs(\Illuminate\Contracts\Hashing\Hasher::class)
+    ->give(\App\Hashing\MysqlPasswordHasher::class);
+```
 
-=== laravel/core rules ===
+Or bind conditionally per guard in the auth flow.
 
-# Do Things the Laravel Way
+### app/Models/Web/Admin.php
 
-- Use `php artisan make:` commands to create new files (i.e. migrations, controllers, models, etc.). You can list available Artisan commands using `php artisan list` and check their parameters with `php artisan [command] --help`.
-- If you're creating a generic PHP class, use `php artisan make:class`.
-- Pass `--no-interaction` to all Artisan commands to ensure they work without user input. You should also pass the correct `--options` to ensure correct behavior.
+```php
+class Admin extends Authenticatable implements FilamentUser
+{
+    protected $connection = 'mysql';   // metin2_web on Ubuntu
+    protected $table = 'admins';
 
-## Database
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
+    }
+}
+```
 
-- Always use proper Eloquent relationship methods with return type hints. Prefer relationship methods over raw queries or manual joins.
-- Use Eloquent models and relationships before suggesting raw database queries.
-- Avoid `DB::`; prefer `Model::query()`. Generate code that leverages Laravel's ORM capabilities rather than bypassing them.
-- Generate code that prevents N+1 query problems by using eager loading.
-- Use Laravel's query builder for very complex database operations.
+---
 
-### Model Creation
+## Database Connections
 
-- When creating new models, create useful factories and seeders for them too. Ask the user if they need any other things, using `php artisan make:model --help` to check the available options.
+### config/database.php
 
-### APIs & Eloquent Resources
+```php
+'connections' => [
 
-- For APIs, default to using Eloquent API Resources and API versioning unless existing API routes do not, then you should follow existing application convention.
+    // Laravel-owned (Ubuntu host)
+    'mysql' => [
+        'driver'   => 'mysql',
+        'host'     => env('DB_HOST', '127.0.0.1'),
+        'port'     => env('DB_PORT', '3306'),
+        'database' => env('DB_DATABASE', 'metin2_web'),
+        'username' => env('DB_USERNAME'),
+        'password' => env('DB_PASSWORD'),
+    ],
 
-## Controllers & Validation
+    // Game DBs (FreeBSD VM — all share same host/user/pass)
+    'account' => [
+        'driver'   => 'mysql',
+        'host'     => env('METIN2_DB_HOST'),
+        'port'     => env('METIN2_DB_PORT', '3306'),
+        'database' => 'account',
+        'username' => env('METIN2_DB_USER'),
+        'password' => env('METIN2_DB_PASS'),
+    ],
+    'player' => [
+        // same as above, database: 'player'
+    ],
+    'common' => [
+        // same as above, database: 'common'
+    ],
+    'log' => [
+        // same as above, database: 'log'
+    ],
+    'hotbackup' => [
+        // same as above, database: 'hotbackup'
+    ],
+],
+```
 
-- Always create Form Request classes for validation rather than inline validation in controllers. Include both validation rules and custom error messages.
-- Check sibling Form Requests to see if the application uses array or string based validation rules.
+### .env
 
-## Authentication & Authorization
+```
+# Web DB (Ubuntu)
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=metin2_web
+DB_USERNAME=...
+DB_PASSWORD=...
 
-- Use Laravel's built-in authentication and authorization features (gates, policies, Sanctum, etc.).
+# Game DBs (FreeBSD VM)
+METIN2_DB_HOST=192.168.x.x
+METIN2_DB_PORT=3306
+METIN2_DB_USER=metin2
+METIN2_DB_PASS=password
+```
 
-## URL Generation
+---
 
-- When generating links to other pages, prefer named routes and the `route()` function.
+## Metin2 DB Schema — Key Tables
 
-## Queues
+### `account.accounts`
+| Column      | Type         | Notes                         |
+|-------------|--------------|-------------------------------|
+| id          | int          | Primary key                   |
+| login       | varchar(30)  | Username                      |
+| password    | varchar(45)  | **MySQL PASSWORD() hash** — starts with `*`, 41 chars |
+| social_id   | varchar(14)  | Unique ID (required, non-null)|
+| email       | varchar(100) |                               |
+| status      | varchar(8)   | `OK`, `BLOCK`, `QUIT`         |
+| availdt     | datetime     | Ban expiry                    |
+| gold_expire | datetime     | Premium expiry                |
+| create_time | datetime     |                               |
+| last_play   | datetime     |                               |
 
-- Use queued jobs for time-consuming operations with the `ShouldQueue` interface.
+> **Ban:** `status = 'BLOCK'`, `availdt` = expiry datetime.
+> **Register:** `status = 'OK'`, `social_id` = unique string (e.g. random), `create_time` = now(), `password` = `'*' . strtoupper(sha1(sha1($password, true)))`
 
-## Configuration
+### `player.player`
+| Column     | Type        | Notes                                 |
+|------------|-------------|---------------------------------------|
+| id         | int         | Character ID                          |
+| account_id | int         | FK → account.accounts.id             |
+| name       | varchar(24) |                                       |
+| job        | tinyint     | 0=Warrior,1=Assassin,2=Sura,3=Shaman |
+| level      | tinyint     | 1–120+                                |
+| exp        | bigint      |                                       |
+| gold       | int         | Yang                                  |
+| map_index  | int         |                                       |
+| x, y       | int         |                                       |
+| empire     | tinyint     | 1=Red,2=Yellow,3=Blue                 |
+| playtime   | int         | Minutes played                        |
+| last_play  | datetime    |                                       |
+| create_time| datetime    |                                       |
 
-- Use environment variables only in configuration files - never use the `env()` function directly outside of config files. Always use `config('app.name')`, not `env('APP_NAME')`.
+### `player.item`
+| Column       | Type    | Notes                      |
+|--------------|---------|----------------------------|
+| id           | int     |                            |
+| owner_id     | int     | FK → player.id             |
+| window       | enum    | INVENTORY, EQUIPMENT, etc. |
+| pos          | tinyint | Slot                       |
+| vnum         | int     | Item template ID           |
+| count        | tinyint |                            |
+| socket0–5    | int     |                            |
+| attrtype0–6  | tinyint |                            |
+| attrvalue0–6 | int     |                            |
 
-## Testing
+### `player.guild`
+| Column | Type        | Notes          |
+|--------|-------------|----------------|
+| id     | int         |                |
+| name   | varchar(12) |                |
+| level  | tinyint     |                |
+| master | int         | FK → player.id |
 
-- When creating models for tests, use the factories for the models. Check if the factory has custom states that can be used before manually setting up the model.
-- Faker: Use methods such as `$this->faker->word()` or `fake()->randomDigit()`. Follow existing conventions whether to use `$this->faker` or `fake()`.
-- When creating tests, make use of `php artisan make:test [options] {name}` to create a feature test, and pass `--unit` to create a unit test. Most tests should be feature tests.
+### `common.item_proto` / `common.mob_proto` — read-only
+Standard Metin2 proto tables. Query by `vnum`.
 
-## Vite Error
+---
 
-- If you receive an "Illuminate\Foundation\ViteException: Unable to locate file in Vite manifest" error, you can run `npm run build` or ask the user to run `npm run dev` or `composer run dev`.
+## Project Structure
 
-=== laravel/v12 rules ===
+```
+metin2-ignition/
+├── app/
+│   ├── Filament/Resources/
+│   │   ├── PlayerResource.php
+│   │   ├── AccountResource.php
+│   │   ├── NewsResource.php
+│   │   └── EventResource.php
+│   ├── Hashing/
+│   │   └── MysqlPasswordHasher.php
+│   ├── Http/Controllers/
+│   │   ├── Auth/
+│   │   │   ├── LoginController.php      (guard: metin2)
+│   │   │   └── RegisterController.php   (writes to account.accounts)
+│   │   ├── HomeController.php
+│   │   ├── RankingController.php
+│   │   ├── NewsController.php
+│   │   └── DownloadController.php
+│   ├── Models/
+│   │   ├── Metin2/
+│   │   │   ├── Account.php   ($connection = 'account')
+│   │   │   ├── Player.php    ($connection = 'player')
+│   │   │   ├── Item.php      ($connection = 'player')
+│   │   │   └── Guild.php     ($connection = 'player')
+│   │   └── Web/
+│   │       ├── Admin.php     ($connection = 'mysql', FilamentUser)
+│   │       └── News.php      ($connection = 'mysql')
+│   └── Services/
+│       └── PlayerService.php
+├── config/
+│   ├── auth.php              (two guards: web + metin2)
+│   └── database.php          (six connections)
+├── database/migrations/      (only for metin2_web tables)
+├── resources/views/
+├── routes/web.php
+└── CLAUDE.md
+```
 
-# Laravel 12
+---
 
-- CRITICAL: ALWAYS use `search-docs` tool for version-specific Laravel documentation and updated code examples.
-- Since Laravel 11, Laravel has a new streamlined file structure which this project uses.
+## Code Style
 
-## Laravel 12 Structure
+**PSR-12** strictly.
 
-- In Laravel 12, middleware are no longer registered in `app/Http/Kernel.php`.
-- Middleware are configured declaratively in `bootstrap/app.php` using `Application::configure()->withMiddleware()`.
-- `bootstrap/app.php` is the file to register middleware, exceptions, and routing files.
-- `bootstrap/providers.php` contains application specific service providers.
-- The `app\Console\Kernel.php` file no longer exists; use `bootstrap/app.php` or `routes/console.php` for console configuration.
-- Console commands in `app/Console/Commands/` are automatically available and do not require manual registration.
+---
 
-## Database
+## Workflow — Adding a New Feature
 
-- When modifying a column, the migration must include all of the attributes that were previously defined on the column. Otherwise, they will be dropped and lost.
-- Laravel 12 allows limiting eagerly loaded records natively, without external packages: `$query->latest()->limit(10);`.
+### Public page
+1. Route in `routes/web.php`
+2. Controller in `app/Http/Controllers/`
+3. Model with correct `$connection`
+4. Blade view in `resources/views/`
 
-### Models
+### Admin panel action
+1. Filament Resource in `app/Filament/Resources/`
+2. Business logic in `app/Services/`
+3. Wire via `Action::make()`
 
-- Casts can and likely should be set in a `casts()` method on a model rather than the `$casts` property. Follow existing conventions from other models.
+### New game DB model
+1. `app/Models/Metin2/`
+2. `protected $connection`, `protected $table`, `public $timestamps = false`
+3. Conservative `$fillable`
 
-=== livewire/core rules ===
+### Migrations
+- Only `metin2_web`: `php artisan migrate --database=mysql`
+- Never against game DBs
 
-# Livewire
+---
 
-- Livewire allows you to build dynamic, reactive interfaces using only PHP — no JavaScript required.
-- Instead of writing frontend code in JavaScript frameworks, you use Alpine.js to build the UI when client-side interactions are required.
-- State lives on the server; the UI reflects it. Validate and authorize in actions (they're like HTTP requests).
-- IMPORTANT: Activate `livewire-development` every time you're working with Livewire-related tasks.
+## Key Constraints
 
-=== pint/core rules ===
+- **Player passwords:** MySQL PASSWORD() — use `mysqlPassword($password)`, never `md5()` or `Hash::make()`
+- **Admin passwords:** bcrypt — standard `Hash::make()`
+- **No timestamps on game models:** `public $timestamps = false`
+- **Game DB is live:** prefer read queries; write actions assume character is offline
+- **Port 3306** must be open on the FreeBSD VM firewall for the Ubuntu host IP
+- **social_id** is required and non-null in `account.accounts` — generate a value on registration (e.g. `substr(md5(uniqid()), 0, 13)`)
+- **Hasher class:** `app/Hashing/MysqlPasswordHasher.php` — replicates MySQL `PASSWORD()` via double SHA1
 
-# Laravel Pint Code Formatter
+---
 
-- If you have modified any PHP files, you must run `vendor/bin/pint --dirty --format agent` before finalizing changes to ensure your code matches the project's expected style.
-- Do not run `vendor/bin/pint --test --format agent`, simply run `vendor/bin/pint --format agent` to fix any formatting issues.
+## Work Phases
 
-=== phpunit/core rules ===
+Detailed work phases are in `.claude/phases/`. Complete them in order:
 
-# PHPUnit
+1. `.claude/phases/phase-1-foundation.md` — DB connections, auth guards, models, migrations
+2. `.claude/phases/phase-2-public-site.md` — layout, login/register, ranking, news, download
+3. `.claude/phases/phase-3-admin-panel.md` — Filament resources, dashboard widgets
+4. `.claude/phases/phase-4-polish.md` — rate limiting, error pages, SEO, production
 
-- This application uses PHPUnit for testing. All tests must be written as PHPUnit classes. Use `php artisan make:test --phpunit {name}` to create a new test.
-- If you see a test using "Pest", convert it to PHPUnit.
-- Every time a test has been updated, run that singular test.
-- When the tests relating to your feature are passing, ask the user if they would like to also run the entire test suite to make sure everything is still passing.
-- Tests should cover all happy paths, failure paths, and edge cases.
-- You must not remove any tests or test files from the tests directory without approval. These are not temporary or helper files; these are core to the application.
-
-## Running Tests
-
-- Run the minimal number of tests, using an appropriate filter, before finalizing.
-- To run all tests: `php artisan test --compact`.
-- To run all tests in a file: `php artisan test --compact tests/Feature/ExampleTest.php`.
-- To filter on a particular test name: `php artisan test --compact --filter=testName` (recommended after making a change to a related file).
-
-</laravel-boost-guidelines>
+**Do not start a new phase untili say it to you and the current one is fully verified.**
