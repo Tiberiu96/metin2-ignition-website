@@ -17,7 +17,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -112,6 +112,72 @@ return [
             'prefix_indexes' => true,
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+        ],
+
+        // Game DB connections — FreeBSD VM (remote)
+        'account' => [
+            'driver' => 'mysql',
+            'host' => env('METIN2_DB_HOST', '127.0.0.1'),
+            'port' => env('METIN2_DB_PORT', '3306'),
+            'database' => 'account',
+            'username' => env('METIN2_DB_USER'),
+            'password' => env('METIN2_DB_PASS'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
+
+        'player' => [
+            'driver' => 'mysql',
+            'host' => env('METIN2_DB_HOST', '127.0.0.1'),
+            'port' => env('METIN2_DB_PORT', '3306'),
+            'database' => 'player',
+            'username' => env('METIN2_DB_USER'),
+            'password' => env('METIN2_DB_PASS'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
+
+        'common' => [
+            'driver' => 'mysql',
+            'host' => env('METIN2_DB_HOST', '127.0.0.1'),
+            'port' => env('METIN2_DB_PORT', '3306'),
+            'database' => 'common',
+            'username' => env('METIN2_DB_USER'),
+            'password' => env('METIN2_DB_PASS'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
+
+        'log' => [
+            'driver' => 'mysql',
+            'host' => env('METIN2_DB_HOST', '127.0.0.1'),
+            'port' => env('METIN2_DB_PORT', '3306'),
+            'database' => 'log',
+            'username' => env('METIN2_DB_USER'),
+            'password' => env('METIN2_DB_PASS'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
+
+        'hotbackup' => [
+            'driver' => 'mysql',
+            'host' => env('METIN2_DB_HOST', '127.0.0.1'),
+            'port' => env('METIN2_DB_PORT', '3306'),
+            'database' => 'hotbackup',
+            'username' => env('METIN2_DB_USER'),
+            'password' => env('METIN2_DB_PASS'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
         ],
 
     ],
