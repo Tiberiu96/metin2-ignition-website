@@ -56,5 +56,9 @@
     "footer_privacy": "Politika konfidentsialnosti (GDPR)",
     "footer_contact": "Svyazhites s nami",
     "footer_about": "O nas",
-    "footer_rights": "Vse prava zashchishcheny."
+    "footer_rights": "Vse prava zashchishcheny.",
+    "login_failed": "Nepravilnoe imya polzovatelya ili parol.",
+    "nav_logout": "Vyhod",
+    "panel_welcome": "Dobro pozhalovat",
+    "discord_online": "chlenov online"
 }

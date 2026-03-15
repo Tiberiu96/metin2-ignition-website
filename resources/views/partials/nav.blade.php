@@ -40,12 +40,28 @@
             {{-- Right side: login + language switcher --}}
             <div class="flex items-center gap-3">
 
-                <a href="{{ route('login') }}"
-                   class="hidden md:inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded
-                          border border-[var(--color-game-border)] text-[var(--color-game-text)]
-                          hover:border-[var(--color-gold-500)] hover:text-[var(--color-gold-400)] transition-colors duration-150">
-                    {{ __('nav_login') }}
-                </a>
+                @auth('metin2')
+                    <span class="hidden md:inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest"
+                          style="color: var(--color-gold-400)">
+                        {{ Auth::guard('metin2')->user()->login }}
+                    </span>
+                    <form method="POST" action="{{ route('logout') }}" class="hidden md:inline">
+                        @csrf
+                        <button type="submit"
+                                class="px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded border transition-colors duration-150
+                                       border-[var(--color-game-border)] text-[var(--color-game-muted)]
+                                       hover:border-[var(--color-gold-500)] hover:text-[var(--color-gold-400)]">
+                            {{ __('nav_logout') }}
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}"
+                       class="hidden md:inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded
+                              border border-[var(--color-game-border)] text-[var(--color-game-text)]
+                              hover:border-[var(--color-gold-500)] hover:text-[var(--color-gold-400)] transition-colors duration-150">
+                        {{ __('nav_login') }}
+                    </a>
+                @endauth
 
                 {{-- Language switcher --}}
                 <div class="relative" id="lang-dropdown-wrapper">
@@ -113,7 +129,16 @@
                 <a href="{{ route('download') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]">{{ __('nav_download') }}</a>
                 <a href="{{ route('ranking') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]">{{ __('nav_ranking') }}</a>
                 <a href="#" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]">{{ __('nav_discord') }}</a>
-                <a href="{{ route('login') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-gold-400)]">{{ __('nav_login') }}</a>
+                @auth('metin2')
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="w-full text-left px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-muted)] hover:text-[var(--color-gold-400)]">
+                            {{ __('nav_logout') }}
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-gold-400)]">{{ __('nav_login') }}</a>
+                @endauth
             </div>
         </div>
     </div>

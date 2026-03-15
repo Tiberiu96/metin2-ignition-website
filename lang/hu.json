@@ -56,5 +56,9 @@
     "footer_privacy": "Adatvedelmi iranyelvek (GDPR)",
     "footer_contact": "Kapcsolat",
     "footer_about": "Rolunk",
-    "footer_rights": "Minden jog fenntartva."
+    "footer_rights": "Minden jog fenntartva.",
+    "login_failed": "Ervenytelen felhasznalonev vagy jelszo.",
+    "nav_logout": "Kijelentkezes",
+    "panel_welcome": "Udvozlunk",
+    "discord_online": "tag online"
 }

@@ -8,7 +8,7 @@ class Account extends Authenticatable
 {
     protected $connection = 'account';
 
-    protected $table = 'accounts';
+    protected $table = 'account';
 
     public $timestamps = false;
 
@@ -17,6 +17,8 @@ class Account extends Authenticatable
         'password',
         'email',
         'social_id',
+        'status',
+        'create_time',
     ];
 
     protected $hidden = [

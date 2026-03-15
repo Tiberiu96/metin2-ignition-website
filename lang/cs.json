@@ -56,5 +56,9 @@
     "footer_privacy": "Zasady ochrany soukromi (GDPR)",
     "footer_contact": "Kontaktujte nas",
     "footer_about": "O nas",
-    "footer_rights": "Vsechna prava vyhrazena."
+    "footer_rights": "Vsechna prava vyhrazena.",
+    "login_failed": "Neplatne uzivatelske jmeno nebo heslo.",
+    "nav_logout": "Odhlasit",
+    "panel_welcome": "Vitejte",
+    "discord_online": "clenu online"
 }

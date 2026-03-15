@@ -56,5 +56,9 @@
     "footer_privacy": "Polityka prywatnosci (RODO)",
     "footer_contact": "Kontakt",
     "footer_about": "O nas",
-    "footer_rights": "Wszelkie prawa zastrzezone."
+    "footer_rights": "Wszelkie prawa zastrzezone.",
+    "login_failed": "Nieprawidlowa nazwa uzytkownika lub haslo.",
+    "nav_logout": "Wyloguj",
+    "panel_welcome": "Witaj",
+    "discord_online": "czlonkow online"
 }

@@ -56,5 +56,9 @@
     "footer_privacy": "Politiki aporitou (GDPR)",
     "footer_contact": "Epikoinonite mazi mas",
     "footer_about": "Sxetika me emas",
-    "footer_rights": "Ola ta dikaiomata diatirountai."
+    "footer_rights": "Ola ta dikaiomata diatirountai.",
+    "login_failed": "Mh egkyro onoma xrhsth h kodikos.",
+    "nav_logout": "Apоσυνδεση",
+    "panel_welcome": "Kalosirthate",
+    "discord_online": "melh online"
 }

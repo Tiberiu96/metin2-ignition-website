@@ -3,12 +3,18 @@
 namespace App\Models\Web;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class News extends Model
 {
+    use HasTranslations;
+
     protected $connection = 'mysql';
 
     protected $table = 'news';
+
+    /** @var array<int, string> */
+    public array $translatable = ['title', 'excerpt', 'body'];
 
     protected $fillable = [
         'title',

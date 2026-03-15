@@ -2,10 +2,7 @@
 
 namespace App\Providers;
 
-use App\Hashing\MysqlPasswordHasher;
-use App\Http\Controllers\Auth\LoginController;
 use Carbon\CarbonImmutable;
-use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -16,12 +13,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(): void
-    {
-        $this->app->when(LoginController::class)
-            ->needs(Hasher::class)
-            ->give(MysqlPasswordHasher::class);
-    }
+    public function register(): void {}
 
     /**
      * Bootstrap any application services.

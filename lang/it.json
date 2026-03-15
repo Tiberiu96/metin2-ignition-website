@@ -56,5 +56,9 @@
     "footer_privacy": "Politica sulla privacy (GDPR)",
     "footer_contact": "Contattaci",
     "footer_about": "Chi siamo",
-    "footer_rights": "Tutti i diritti riservati."
+    "footer_rights": "Tutti i diritti riservati.",
+    "login_failed": "Nome utente o password non validi.",
+    "nav_logout": "Disconnetti",
+    "panel_welcome": "Benvenuto",
+    "discord_online": "membri online"
 }

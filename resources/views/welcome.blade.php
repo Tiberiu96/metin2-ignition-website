@@ -89,25 +89,38 @@
                 {{-- Login panel --}}
                 <div class="rounded p-4 flex flex-col gap-3"
                      style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
-                    <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">{{ __('panel_login_panel') }}</h3>
-                    <form method="POST" action="{{ route('login') }}" class="flex flex-col gap-2">
-                        @csrf
-                        <input type="text" name="login" placeholder="{{ __('panel_username') }}"
-                               class="w-full px-3 py-2 text-xs rounded outline-none"
-                               style="background-color: var(--color-game-bg); border: 1px solid var(--color-game-border); color: var(--color-game-text);">
-                        <input type="password" name="password" placeholder="{{ __('panel_password') }}"
-                               class="w-full px-3 py-2 text-xs rounded outline-none"
-                               style="background-color: var(--color-game-bg); border: 1px solid var(--color-game-border); color: var(--color-game-text);">
-                        <button type="submit"
-                                class="w-full py-2 text-xs font-bold uppercase tracking-widest rounded transition-colors duration-150"
-                                style="background-color: var(--color-gold-600); color: #fff;">
-                            {{ __('panel_login') }}
-                        </button>
-                    </form>
-                    <div class="flex flex-col gap-1 text-[10px]" style="color: var(--color-game-muted)">
-                        <a href="#" class="hover:text-[var(--color-game-text)] transition-colors">{{ __('panel_forgot_password') }}</a>
-                        <a href="#" class="hover:text-[var(--color-game-text)] transition-colors">{{ __('panel_forgot_login') }}</a>
-                    </div>
+                    @auth('metin2')
+                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">{{ __('panel_welcome') }}</h3>
+                        <p class="text-xs font-semibold" style="color: var(--color-game-text)">{{ Auth::guard('metin2')->user()->login }}</p>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                    class="w-full py-2 text-xs font-bold uppercase tracking-widest rounded transition-colors duration-150"
+                                    style="background-color: var(--color-game-surface); border: 1px solid var(--color-game-border); color: var(--color-game-muted);">
+                                {{ __('nav_logout') }}
+                            </button>
+                        </form>
+                    @else
+                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">{{ __('panel_login_panel') }}</h3>
+                        <form method="POST" action="{{ route('login') }}" class="flex flex-col gap-2">
+                            @csrf
+                            <input type="text" name="login" placeholder="{{ __('panel_username') }}"
+                                   class="w-full px-3 py-2 text-xs rounded outline-none"
+                                   style="background-color: var(--color-game-bg); border: 1px solid var(--color-game-border); color: var(--color-game-text);">
+                            <input type="password" name="password" placeholder="{{ __('panel_password') }}"
+                                   class="w-full px-3 py-2 text-xs rounded outline-none"
+                                   style="background-color: var(--color-game-bg); border: 1px solid var(--color-game-border); color: var(--color-game-text);">
+                            <button type="submit"
+                                    class="w-full py-2 text-xs font-bold uppercase tracking-widest rounded transition-colors duration-150"
+                                    style="background-color: var(--color-gold-600); color: #fff;">
+                                {{ __('panel_login') }}
+                            </button>
+                        </form>
+                        <div class="flex flex-col gap-1 text-[10px]" style="color: var(--color-game-muted)">
+                            <a href="#" class="hover:text-[var(--color-game-text)] transition-colors">{{ __('panel_forgot_password') }}</a>
+                            <a href="#" class="hover:text-[var(--color-game-text)] transition-colors">{{ __('panel_forgot_login') }}</a>
+                        </div>
+                    @endauth
                 </div>
 
                 {{-- Itemshop --}}
@@ -180,14 +193,23 @@
                         </a>
                     </div>
 
-                    {{-- Discord widget placeholder --}}
-                    <div class="flex flex-col items-center justify-center gap-3 p-8 text-center"
-                         style="min-height: 240px; color: var(--color-game-muted);">
-                        <svg class="w-12 h-12 opacity-20" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.036.056a19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.036-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/>
-                        </svg>
-                        <p class="text-xs">Discord widget — add your server ID to enable</p>
-                    </div>
+                    @php
+                        $discordServerId  = config('services.discord.server_id');
+                        $discordChannelId = config('services.discord.channel_id');
+                    @endphp
+                    @if($discordServerId && $discordChannelId)
+                        <iframe
+                            src="https://e.widgetbot.io/channels/{{ $discordServerId }}/{{ $discordChannelId }}"
+                            height="340"
+                            width="100%"
+                            frameborder="0">
+                        </iframe>
+                    @else
+                        <div class="flex flex-col items-center justify-center gap-3 p-8 text-center"
+                             style="min-height: 200px; color: var(--color-game-muted);">
+                            <p class="text-xs">Adauga <code>DISCORD_CHANNEL_ID</code> in <code>.env</code></p>
+                        </div>
+                    @endif
                 </div>
 
             </div>

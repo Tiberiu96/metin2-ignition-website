@@ -56,5 +56,9 @@
     "footer_privacy": "Datenschutzrichtlinie (DSGVO)",
     "footer_contact": "Kontakt",
     "footer_about": "Uber uns",
-    "footer_rights": "Alle Rechte vorbehalten."
+    "footer_rights": "Alle Rechte vorbehalten.",
+    "login_failed": "Ungultiger Benutzername oder Passwort.",
+    "nav_logout": "Abmelden",
+    "panel_welcome": "Willkommen",
+    "discord_online": "Mitglieder online"
 }

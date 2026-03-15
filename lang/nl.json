@@ -56,5 +56,9 @@
     "footer_privacy": "Privacybeleid (AVG)",
     "footer_contact": "Contact",
     "footer_about": "Over ons",
-    "footer_rights": "Alle rechten voorbehouden."
+    "footer_rights": "Alle rechten voorbehouden.",
+    "login_failed": "Ongeldige gebruikersnaam of wachtwoord.",
+    "nav_logout": "Uitloggen",
+    "panel_welcome": "Welkom",
+    "discord_online": "leden online"
 }

@@ -56,5 +56,9 @@
     "footer_privacy": "Gizlilik Politikasi (KVKK)",
     "footer_contact": "Bize Ulasin",
     "footer_about": "Hakkimizda",
-    "footer_rights": "Tum haklari saklidir."
+    "footer_rights": "Tum haklari saklidir.",
+    "login_failed": "Gecersiz kullanici adi veya sifre.",
+    "nav_logout": "Cikis",
+    "panel_welcome": "Hosgeldiniz",
+    "discord_online": "uye cevrimici"
 }

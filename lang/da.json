@@ -56,5 +56,9 @@
     "footer_privacy": "Privatlivspolitik (GDPR)",
     "footer_contact": "Kontakt os",
     "footer_about": "Om os",
-    "footer_rights": "Alle rettigheder forbeholdes."
+    "footer_rights": "Alle rettigheder forbeholdes.",
+    "login_failed": "Ugyldigt brugernavn eller adgangskode.",
+    "nav_logout": "Log ud",
+    "panel_welcome": "Velkommen",
+    "discord_online": "medlemmer online"
 }

@@ -56,5 +56,9 @@
     "footer_privacy": "Politica de privacidad (RGPD)",
     "footer_contact": "Contactanos",
     "footer_about": "Sobre nosotros",
-    "footer_rights": "Todos los derechos reservados."
+    "footer_rights": "Todos los derechos reservados.",
+    "login_failed": "Usuario o contrasena invalidos.",
+    "nav_logout": "Cerrar sesion",
+    "panel_welcome": "Bienvenido",
+    "discord_online": "miembros en linea"
 }

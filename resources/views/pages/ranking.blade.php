@@ -25,7 +25,7 @@
                             <td class="px-4 py-3 font-semibold" style="color: var(--color-game-text)">{{ $player->name }}</td>
                             <td class="px-4 py-3" style="color: var(--color-game-muted)">{{ $player->job_name }}</td>
                             <td class="px-4 py-3 text-right font-bold" style="color: var(--color-gold-400)">{{ $player->level }}</td>
-                            <td class="px-4 py-3 text-right" style="color: var(--color-game-muted)">{{ $player->playtime }}h</td>
+                            <td class="px-4 py-3 text-right" style="color: var(--color-game-muted)">{{ $player->playtime_hours }}h</td>
                         </tr>
                     @empty
                         <tr>

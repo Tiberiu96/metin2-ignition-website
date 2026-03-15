@@ -56,5 +56,9 @@
     "footer_privacy": "Privacy Policy (GDPR)",
     "footer_contact": "Contact Us",
     "footer_about": "About Us",
-    "footer_rights": "All rights reserved."
+    "footer_rights": "All rights reserved.",
+    "login_failed": "Invalid username or password.",
+    "nav_logout": "Logout",
+    "panel_welcome": "Welcome",
+    "discord_online": "members online"
 }

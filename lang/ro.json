@@ -56,5 +56,9 @@
     "footer_privacy": "Politica de Confidentialitate (GDPR)",
     "footer_contact": "Contact",
     "footer_about": "Despre Noi",
-    "footer_rights": "Toate drepturile rezervate."
+    "footer_rights": "Toate drepturile rezervate.",
+    "login_failed": "Nume de utilizator sau parola invalide.",
+    "nav_logout": "Deconectare",
+    "panel_welcome": "Bun venit",
+    "discord_online": "membri online"
 }

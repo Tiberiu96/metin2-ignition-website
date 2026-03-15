@@ -56,5 +56,9 @@
     "footer_privacy": "Politique de confidentialite (RGPD)",
     "footer_contact": "Nous contacter",
     "footer_about": "A propos",
-    "footer_rights": "Tous droits reserves."
+    "footer_rights": "Tous droits reserves.",
+    "login_failed": "Nom d'utilisateur ou mot de passe invalide.",
+    "nav_logout": "Deconnexion",
+    "panel_welcome": "Bienvenue",
+    "discord_online": "membres en ligne"
 }
