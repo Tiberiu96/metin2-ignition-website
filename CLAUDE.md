@@ -169,6 +169,16 @@ routes/web.php
 
 ---
 
+## Internationalization (i18n)
+
+- **Supported locales:** `en`, `de`, `hu`, `fr`, `cs`, `da`, `es`, `el`, `it`, `nl`, `pl`, `pt`, `ro`, `ru`, `tr`
+- **Default:** `en`
+- **Detection:** `SetLocale` middleware — priority: `?lang=xx` URL param → session → `Accept-Language` header → fallback `en`
+- **Translation files:** `lang/{locale}.json` — flat keys, e.g. `__('nav_home')`
+- **CRITICAL — NO DIACRITICS:** Translation strings must use ASCII only. No ă, â, î, ș, ț, ö, ü, ä, á, é, etc. Replace with closest ASCII equivalent (ă→a, ș→s, ö→o, etc.)
+
+---
+
 ## Work Phases
 
 Detailed specs in `.claude/phases/`. Complete in order, do not start next phase until current is verified:
