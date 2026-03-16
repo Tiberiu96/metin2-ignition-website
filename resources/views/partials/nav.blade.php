@@ -41,10 +41,12 @@
             <div class="flex items-center gap-3">
 
                 @auth('metin2')
-                    <span class="hidden md:inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest"
-                          style="color: var(--color-gold-400)">
+                    <a href="{{ route('account') }}"
+                       class="hidden md:inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest transition-colors duration-150
+                              {{ request()->routeIs('account') ? '' : 'hover:opacity-80' }}"
+                       style="color: var(--color-gold-400)">
                         {{ Auth::guard('metin2')->user()->login }}
-                    </span>
+                    </a>
                     <form method="POST" action="{{ route('logout') }}" class="hidden md:inline">
                         @csrf
                         <button type="submit"
@@ -130,6 +132,7 @@
                 <a href="{{ route('ranking') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]">{{ __('nav_ranking') }}</a>
                 <a href="#" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]">{{ __('nav_discord') }}</a>
                 @auth('metin2')
+                    <a href="{{ route('account') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest" style="color: var(--color-gold-400)">{{ Auth::guard('metin2')->user()->login }}</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="w-full text-left px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-muted)] hover:text-[var(--color-gold-400)]">

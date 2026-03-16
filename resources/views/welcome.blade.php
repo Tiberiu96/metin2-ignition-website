@@ -91,7 +91,12 @@
                      style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
                     @auth('metin2')
                         <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">{{ __('panel_welcome') }}</h3>
-                        <p class="text-xs font-semibold" style="color: var(--color-game-text)">{{ Auth::guard('metin2')->user()->login }}</p>
+                        <a href="{{ route('account') }}" class="text-xs font-semibold hover:opacity-80 transition-opacity" style="color: var(--color-game-text)">{{ Auth::guard('metin2')->user()->login }}</a>
+                        <a href="{{ route('account') }}"
+                           class="w-full py-2 text-xs font-bold uppercase tracking-widest rounded text-center transition-colors duration-150"
+                           style="background-color: var(--color-game-surface); border: 1px solid var(--color-game-border); color: var(--color-game-muted);">
+                            {{ __('account_my_account') }}
+                        </a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit"
@@ -117,8 +122,7 @@
                             </button>
                         </form>
                         <div class="flex flex-col gap-1 text-[10px]" style="color: var(--color-game-muted)">
-                            <a href="#" class="hover:text-[var(--color-game-text)] transition-colors">{{ __('panel_forgot_password') }}</a>
-                            <a href="#" class="hover:text-[var(--color-game-text)] transition-colors">{{ __('panel_forgot_login') }}</a>
+                            <a href="{{ route('password.forgot.form') }}" class="hover:text-[var(--color-game-text)] transition-colors">{{ __('panel_forgot_password') }}</a>
                         </div>
                     @endauth
                 </div>

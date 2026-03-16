@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
@@ -19,6 +21,14 @@ Route::middleware('guest:metin2')->group(function () {
 
     Route::get('/register', [RegisterController::class, 'show'])->name('register');
     Route::post('/register', [RegisterController::class, 'store']);
+
+    Route::get('/forgot-password', [PasswordController::class, 'showForgotForm'])->name('password.forgot.form');
+    Route::post('/forgot-password', [PasswordController::class, 'forgot'])->name('password.forgot');
+});
+
+Route::middleware('auth:metin2')->group(function () {
+    Route::get('/account', [AccountController::class, 'show'])->name('account');
+    Route::post('/account/password', [AccountController::class, 'changePassword'])->name('account.password');
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

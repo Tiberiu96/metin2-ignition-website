@@ -93,6 +93,7 @@ Env vars: `DB_*` for web DB, `METIN2_DB_HOST/PORT/USER/PASS` for game DBs.
 | availdt     | datetime     | Ban expiry                                     |
 | gold_expire | datetime     | Premium expiry                                 |
 | create_time | datetime     |                                                |
+| empire      | tinyint      | 1=Red,2=Yellow,3=Blue — stored on account      |
 
 **Ban:** `status = 'BLOCK'`, `availdt` = expiry datetime.
 **Register:** set `status = 'OK'`, `social_id` = `substr(md5(uniqid()), 0, 13)`, `create_time` = now().
