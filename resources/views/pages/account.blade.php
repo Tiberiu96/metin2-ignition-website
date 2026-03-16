@@ -36,37 +36,27 @@
         </div>
 
         {{-- Characters --}}
-        <div class="rounded overflow-hidden"
+        <div class="rounded p-6 flex flex-col gap-4"
              style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
-            <div class="px-6 py-3" style="border-bottom: 1px solid var(--color-game-border);">
-                <h2 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">
-                    {{ __('account_characters') }}
-                </h2>
-            </div>
+
+            <h2 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">
+                {{ __('account_characters') }}
+            </h2>
 
             @if($characters->isEmpty())
-                <p class="px-6 py-4 text-xs" style="color: var(--color-game-muted)">{{ __('account_no_characters') }}</p>
+                <p class="text-xs" style="color: var(--color-game-muted)">{{ __('account_no_characters') }}</p>
             @else
-                <table class="w-full text-xs">
-                    <thead>
-                        <tr style="border-bottom: 1px solid var(--color-game-border); color: var(--color-game-muted);">
-                            <th class="px-6 py-2 text-left font-medium text-[10px] uppercase tracking-widest">{{ __('ranking_player') }}</th>
-                            <th class="px-4 py-2 text-left font-medium text-[10px] uppercase tracking-widest">{{ __('ranking_class') }}</th>
-                            <th class="px-4 py-2 text-left font-medium text-[10px] uppercase tracking-widest">{{ __('ranking_level') }}</th>
-                            <th class="px-4 py-2 text-left font-medium text-[10px] uppercase tracking-widest hidden sm:table-cell">{{ __('ranking_playtime') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($characters as $char)
-                            <tr style="border-bottom: 1px solid var(--color-game-border);">
-                                <td class="px-6 py-2 font-semibold" style="color: var(--color-game-text)">{{ $char->name }}</td>
-                                <td class="px-4 py-2" style="color: var(--color-game-muted)">{{ $char->job_name }}</td>
-                                <td class="px-4 py-2 font-bold" style="color: var(--color-gold-400)">{{ $char->level }}</td>
-                                <td class="px-4 py-2 hidden sm:table-cell" style="color: var(--color-game-muted)">{{ $char->playtime_hours }}h</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="flex flex-col gap-2">
+                    @foreach($characters as $char)
+                        <div class="flex items-center justify-between px-4 py-3 rounded text-xs"
+                             style="background-color: var(--color-game-bg); border: 1px solid var(--color-game-border);">
+                            <span class="font-semibold w-1/3" style="color: var(--color-game-text)">{{ $char->name }}</span>
+                            <span class="w-1/4 text-center" style="color: var(--color-game-muted)">{{ $char->job_name }}</span>
+                            <span class="w-1/6 text-center font-bold" style="color: var(--color-gold-400)">Lv. {{ $char->level }}</span>
+                            <span class="w-1/6 text-right hidden sm:block" style="color: var(--color-game-muted)">{{ $char->playtime_hours }}h</span>
+                        </div>
+                    @endforeach
+                </div>
             @endif
         </div>
 
