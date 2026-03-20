@@ -14,19 +14,25 @@ class HomeController extends Controller
 {
     public function index(): View
     {
-        $stats = [
-            'online' => Player::query()->where('last_play', '>=', now()->subMinutes(5))->count(),
-            'online_24h' => Player::query()->where('last_play', '>=', now()->subDay())->count(),
-            'accounts' => Account::query()->count(),
-            'players' => Player::query()->count(),
-            'guilds' => Guild::query()->count(),
-        ];
+        $stats = Cache::remember('home_stats', 300, function () {
+            return [
+                'online' => Player::query()->where('last_play', '>=', now()->subMinutes(5))->count(),
+                'online_24h' => Player::query()->where('last_play', '>=', now()->subDay())->count(),
+                'accounts' => Account::query()->count(),
+                'players' => Player::query()->count(),
+                'guilds' => Guild::query()->count(),
+            ];
+        });
 
-        $topPlayers = Player::query()
-            ->orderByDesc('level')
-            ->orderByDesc('exp')
-            ->limit(10)
-            ->get();
+        $topPlayers = Cache::remember('home_top_players', 300, function () {
+            return Player::query()
+                ->select(['player.id', 'player.account_id', 'player.name', 'player.level', 'player.exp', 'player_index.empire'])
+                ->leftJoin('player_index', 'player_index.id', '=', 'player.account_id')
+                ->orderByDesc('player.level')
+                ->orderByDesc('player.exp')
+                ->limit(10)
+                ->get();
+        });
 
         $news = News::query()
             ->where('is_published', true)
@@ -58,8 +64,8 @@ class HomeController extends Controller
                 $data = $response->json();
 
                 return [
-                    'name'           => $data['name'] ?? null,
-                    'online'         => count($data['members'] ?? []),
+                    'name' => $data['name'] ?? null,
+                    'online' => count($data['members'] ?? []),
                     'instant_invite' => $data['instant_invite'] ?? null,
                 ];
             });

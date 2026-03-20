@@ -79,44 +79,17 @@ Env vars: `DB_*` for web DB, `METIN2_DB_HOST/PORT/USER/PASS` for game DBs.
 
 ---
 
-## Key Tables (Game DB — read-only unless noted)
+## Database Schema
 
-### `account.accounts` — read/write
-| Column      | Type         | Notes                                          |
-|-------------|--------------|------------------------------------------------|
-| id          | int          | PK                                             |
-| login       | varchar(30)  | Username                                       |
-| password    | varchar(45)  | MySQL PASSWORD() hash — 41 chars, starts with `*` |
-| social_id   | varchar(14)  | Required, non-null — generate on registration  |
-| email       | varchar(100) |                                                |
-| status      | varchar(8)   | `OK`, `BLOCK`, `QUIT`                          |
-| availdt     | datetime     | Ban expiry                                     |
-| gold_expire | datetime     | Premium expiry                                 |
-| create_time | datetime     |                                                |
-| empire      | tinyint      | 1=Red,2=Yellow,3=Blue — stored on account      |
+For full verified schema of all tables and columns, see:
+**`.claude/references/db_schema.md`**
 
-**Ban:** `status = 'BLOCK'`, `availdt` = expiry datetime.
-**Register:** set `status = 'OK'`, `social_id` = `substr(md5(uniqid()), 0, 13)`, `create_time` = now().
-
-### `player.player` — read/write
-| Column     | Type        | Notes                                 |
-|------------|-------------|---------------------------------------|
-| id         | int         | Character ID                          |
-| account_id | int         | FK → account.accounts.id             |
-| name       | varchar(24) |                                       |
-| job        | tinyint     | 0=Warrior,1=Assassin,2=Sura,3=Shaman |
-| level      | tinyint     | 1–120+                                |
-| exp        | bigint      |                                       |
-| gold       | int         | Yang                                  |
-| empire     | tinyint     | 1=Red,2=Yellow,3=Blue                 |
-| playtime   | int         | Minutes played                        |
-| last_play  | datetime    |                                       |
-| create_time| datetime    |                                       |
-
-### Other tables
-- `player.item` — inventory/equipment items, `owner_id` → `player.id`
-- `player.guild` — guilds, `master` → `player.id`
-- `common.item_proto`, `common.mob_proto` — read-only proto tables, query by `vnum`
+Key facts to remember:
+- `account.account` (NOT `accounts`) — login, password, email, status, availDt (camelCase), empire (unreliable default 0)
+- `player.player` — NO empire column
+- `player.player_index` — authoritative empire; `id` = account_id, `pid1–4` = character slots
+- To get empire: `LEFT JOIN player_index ON player_index.id = player.account_id`
+- `common.gmlist` — GM accounts with mAuthority level
 
 ---
 

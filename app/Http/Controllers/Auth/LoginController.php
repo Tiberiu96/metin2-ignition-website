@@ -42,9 +42,15 @@ class LoginController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
+        $locale = $request->session()->get('locale');
+
         Auth::guard('metin2')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
+        if ($locale) {
+            $request->session()->put('locale', $locale);
+        }
 
         return redirect()->route('home');
     }

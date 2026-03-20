@@ -15,21 +15,47 @@
                         <th class="px-4 py-3 text-left font-medium">{{ __('ranking_player') }}</th>
                         <th class="px-4 py-3 text-left font-medium">{{ __('ranking_class') }}</th>
                         <th class="px-4 py-3 text-right font-medium">{{ __('ranking_level') }}</th>
-                        <th class="px-4 py-3 text-right font-medium">{{ __('ranking_playtime') }}</th>
+                        <th class="px-4 py-3 text-right font-medium hidden sm:table-cell">{{ __('ranking_playtime') }}</th>
+                        <th class="px-4 py-3 text-right font-medium w-10"></th>
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $crowns = [
+                            1 => '/images/crown/gold-crown.png',
+                            2 => '/images/crown/silver-crown.png',
+                            3 => '/images/crown/bronze-crown.png',
+                        ];
+                        $empires = [
+                            1 => '/images/empires/empire-red.png',
+                            2 => '/images/empires/empire-yellow.png',
+                            3 => '/images/empires/empire-blue.png',
+                        ];
+                    @endphp
+
                     @forelse($players ?? [] as $i => $player)
-                        <tr style="border-bottom: 1px solid var(--color-game-border);">
-                            <td class="px-4 py-3 font-bold" style="color: var(--color-game-muted)">{{ $i + 1 }}</td>
+                        @php $rank = $i + 1; @endphp
+                        <tr style="border-bottom: 1px solid var(--color-game-border); {{ $rank <= 3 ? 'background-color: rgba(255,255,255,0.02);' : '' }}">
+                            <td class="px-4 py-3 w-12">
+                                @if(isset($crowns[$rank]))
+                                    <img src="{{ $crowns[$rank] }}" alt="{{ $rank }}" class="w-6 h-6 object-contain">
+                                @else
+                                    <span class="font-bold" style="color: var(--color-game-muted)">{{ $rank }}</span>
+                                @endif
+                            </td>
                             <td class="px-4 py-3 font-semibold" style="color: var(--color-game-text)">{{ $player->name }}</td>
                             <td class="px-4 py-3" style="color: var(--color-game-muted)">{{ $player->job_name }}</td>
                             <td class="px-4 py-3 text-right font-bold" style="color: var(--color-gold-400)">{{ $player->level }}</td>
-                            <td class="px-4 py-3 text-right" style="color: var(--color-game-muted)">{{ $player->playtime_hours }}h</td>
+                            <td class="px-4 py-3 text-right hidden sm:table-cell" style="color: var(--color-game-muted)">{{ $player->playtime_hours }}h</td>
+                            <td class="px-4 py-3 text-right">
+                                @if(isset($empires[$player->empire ?? 0]))
+                                    <img src="{{ $empires[$player->empire] }}" alt="empire {{ $player->empire }}" class="w-6 h-6 object-contain inline-block">
+                                @endif
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-4 py-8 text-center text-xs" style="color: var(--color-game-muted)">
+                            <td colspan="6" class="px-4 py-8 text-center text-xs" style="color: var(--color-game-muted)">
                                 {{ __('ranking_no_players') }}
                             </td>
                         </tr>

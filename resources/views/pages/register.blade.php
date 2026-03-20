@@ -12,6 +12,10 @@
 
             <form method="POST" action="{{ route('register') }}" class="flex flex-col gap-3">
                 @csrf
+                {{-- Honeypot: hidden from humans, bots fill it --}}
+                <div style="position:absolute;left:-9999px;height:0;overflow:hidden;" aria-hidden="true">
+                    <input type="text" name="website" value="" tabindex="-1" autocomplete="off">
+                </div>
 
                 <div class="flex flex-col gap-1">
                     <label class="text-[10px] uppercase tracking-widest" style="color: var(--color-game-muted)">{{ __('panel_username') }}</label>

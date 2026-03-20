@@ -17,13 +17,13 @@ Route::get('/news', [NewsController::class, 'index'])->name('news');
 
 Route::middleware('guest:metin2')->group(function () {
     Route::get('/login', [LoginController::class, 'show'])->name('login');
-    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/login', [LoginController::class, 'login'])->middleware('honeypot');
 
     Route::get('/register', [RegisterController::class, 'show'])->name('register');
-    Route::post('/register', [RegisterController::class, 'store']);
+    Route::post('/register', [RegisterController::class, 'store'])->middleware('honeypot');
 
     Route::get('/forgot-password', [PasswordController::class, 'showForgotForm'])->name('password.forgot.form');
-    Route::post('/forgot-password', [PasswordController::class, 'forgot'])->name('password.forgot');
+    Route::post('/forgot-password', [PasswordController::class, 'forgot'])->name('password.forgot')->middleware('honeypot');
 });
 
 Route::middleware('auth:metin2')->group(function () {

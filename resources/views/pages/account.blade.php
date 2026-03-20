@@ -33,6 +33,16 @@
                     <span style="color: var(--color-game-text)">{{ $account->create_time ?? '—' }}</span>
                 </div>
             </div>
+
+            <form method="POST" action="{{ route('logout') }}" class="pt-2">
+                @csrf
+                <button type="submit"
+                        class="px-5 py-2 text-xs font-semibold uppercase tracking-widest rounded border transition-colors duration-150
+                               border-[var(--color-game-border)] text-[var(--color-game-muted)]
+                               hover:border-red-500 hover:text-red-400">
+                    {{ __('nav_logout') }}
+                </button>
+            </form>
         </div>
 
         {{-- Characters --}}

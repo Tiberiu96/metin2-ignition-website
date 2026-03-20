@@ -149,20 +149,45 @@
                             {{ __('panel_see_all') }}
                         </a>
                     </div>
+                    @php
+                        $homeCrowns = [
+                            1 => '/images/crown/gold-crown.png',
+                            2 => '/images/crown/silver-crown.png',
+                            3 => '/images/crown/bronze-crown.png',
+                        ];
+                        $homeEmpires = [
+                            1 => '/images/empires/empire-red.png',
+                            2 => '/images/empires/empire-yellow.png',
+                            3 => '/images/empires/empire-blue.png',
+                        ];
+                    @endphp
                     <table class="w-full text-[10px]">
                         <thead>
                             <tr style="border-bottom: 1px solid var(--color-game-border); color: var(--color-game-muted);">
-                                <th class="px-3 py-1.5 text-left font-medium">#</th>
+                                <th class="px-3 py-1.5 text-left font-medium w-8">#</th>
                                 <th class="px-3 py-1.5 text-left font-medium">{{ __('ranking_player') }}</th>
                                 <th class="px-3 py-1.5 text-right font-medium">Lv</th>
+                                <th class="px-3 py-1.5 text-right font-medium w-8"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($topPlayers ?? [] as $i => $player)
+                                @php $rank = $i + 1; @endphp
                                 <tr style="border-bottom: 1px solid var(--color-game-border);">
-                                    <td class="px-3 py-1.5" style="color: var(--color-game-muted)">{{ $i + 1 }}</td>
+                                    <td class="px-3 py-1.5 w-8">
+                                        @if(isset($homeCrowns[$rank]))
+                                            <img src="{{ $homeCrowns[$rank] }}" alt="{{ $rank }}" class="w-4 h-4 object-contain">
+                                        @else
+                                            <span style="color: var(--color-game-muted)">{{ $rank }}</span>
+                                        @endif
+                                    </td>
                                     <td class="px-3 py-1.5" style="color: var(--color-game-text)">{{ $player->name }}</td>
                                     <td class="px-3 py-1.5 text-right font-bold" style="color: var(--color-gold-400)">{{ $player->level }}</td>
+                                    <td class="px-3 py-1.5 text-right w-8">
+                                        @if(isset($homeEmpires[$player->empire ?? 0]))
+                                            <img src="{{ $homeEmpires[$player->empire] }}" alt="empire" class="w-4 h-4 object-contain inline-block">
+                                        @endif
+                                    </td>
                                 </tr>
                             @empty
                                 @for($i = 1; $i <= 10; $i++)
@@ -170,6 +195,7 @@
                                         <td class="px-3 py-1.5" style="color: var(--color-game-muted)">{{ $i }}</td>
                                         <td class="px-3 py-1.5" style="color: var(--color-game-text)">—</td>
                                         <td class="px-3 py-1.5 text-right font-bold" style="color: var(--color-gold-400)">—</td>
+                                        <td class="px-3 py-1.5"></td>
                                     </tr>
                                 @endfor
                             @endforelse
