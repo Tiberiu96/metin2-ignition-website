@@ -92,4 +92,14 @@
     "empire_red": "Rod",
     "empire_yellow": "Gul",
     "empire_blue": "Bla"
+,
+    "register_delete_code": "Slet karakter kode",
+    "register_delete_code_hint": "Skal indeholde praecis 7 cifre"
+,
+    "validation_login_min": "Brugernavnet skal have mindst 4 tegn.",
+    "validation_login_max": "Brugernavnet ma ikke overstige 30 tegn.",
+    "validation_login_unique": "Dette brugernavn er allerede taget.",
+    "validation_email_unique": "Denne e-mail er allerede registreret.",
+    "validation_securitycode_required": "Sletningskode er pakraevet.",
+    "validation_securitycode_digits": "Sletningskoden skal indeholde praecis 7 cifre."
 }

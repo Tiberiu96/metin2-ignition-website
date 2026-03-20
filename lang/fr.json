@@ -92,4 +92,14 @@
     "empire_red": "Rouge",
     "empire_yellow": "Jaune",
     "empire_blue": "Bleu"
+,
+    "register_delete_code": "Code de suppression",
+    "register_delete_code_hint": "Doit contenir exactement 7 chiffres"
+,
+    "validation_login_min": "Le nom doit contenir au moins 4 caracteres.",
+    "validation_login_max": "Le nom ne peut pas depasser 30 caracteres.",
+    "validation_login_unique": "Ce nom est deja utilise.",
+    "validation_email_unique": "Cet email est deja enregistre.",
+    "validation_securitycode_required": "Le code de suppression est obligatoire.",
+    "validation_securitycode_digits": "Le code de suppression doit contenir exactement 7 chiffres."
 }

@@ -54,6 +54,20 @@
                            style="background-color: var(--color-game-bg); border: 1px solid var(--color-game-border); color: var(--color-game-text);">
                 </div>
 
+                <div style="border-top: 1px solid var(--color-game-border); margin-top: 4px;"></div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] uppercase tracking-widest" style="color: var(--color-game-muted)">{{ __('register_delete_code') }}</label>
+                    <input type="text" name="social_id" value="{{ old('social_id') }}"
+                           maxlength="7" inputmode="numeric" pattern="\d{7}"
+                           class="w-full px-3 py-2 text-xs rounded outline-none"
+                           style="background-color: var(--color-game-bg); border: 1px solid var(--color-game-border); color: var(--color-game-text);">
+                    <span class="text-[10px]" style="color: var(--color-game-muted)">{{ __('register_delete_code_hint') }}</span>
+                    @error('social_id')
+                        <span class="text-[10px] text-red-400">{{ $message }}</span>
+                    @enderror
+                </div>
+
                 <button type="submit"
                         class="w-full py-2 mt-2 text-xs font-bold uppercase tracking-widest rounded transition-colors duration-150"
                         style="background-color: var(--color-gold-600); color: #fff;">

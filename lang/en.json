@@ -92,4 +92,14 @@
     "empire_red": "Red",
     "empire_yellow": "Yellow",
     "empire_blue": "Blue"
+,
+    "register_delete_code": "Character Delete Code",
+    "register_delete_code_hint": "Must be exactly 7 digits"
+,
+    "validation_login_min": "Username must be at least 4 characters.",
+    "validation_login_max": "Username cannot exceed 30 characters.",
+    "validation_login_unique": "This username is already taken.",
+    "validation_email_unique": "This email is already registered.",
+    "validation_securitycode_required": "Delete code is required.",
+    "validation_securitycode_digits": "Delete code must be exactly 7 digits."
 }

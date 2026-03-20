@@ -92,4 +92,14 @@
     "empire_red": "Rot",
     "empire_yellow": "Gelb",
     "empire_blue": "Blau"
+,
+    "register_delete_code": "Charakter-Loschcode",
+    "register_delete_code_hint": "Muss genau 7 Ziffern enthalten"
+,
+    "validation_login_min": "Der Benutzername muss mindestens 4 Zeichen lang sein.",
+    "validation_login_max": "Der Benutzername darf maximal 30 Zeichen lang sein.",
+    "validation_login_unique": "Dieser Benutzername ist bereits vergeben.",
+    "validation_email_unique": "Diese E-Mail ist bereits registriert.",
+    "validation_securitycode_required": "Loschcode ist erforderlich.",
+    "validation_securitycode_digits": "Loschcode muss genau 7 Ziffern enthalten."
 }

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Hashing\MysqlPasswordHasher;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\Metin2\Account;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class RegisterController extends Controller
@@ -16,13 +16,8 @@ class RegisterController extends Controller
         return view('pages.register');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(RegisterRequest $request): RedirectResponse
     {
-        $request->validate([
-            'login' => ['required', 'string', 'min:4', 'max:30', 'unique:account.account,login'],
-            'email' => ['required', 'email', 'max:100', 'unique:account.account,email'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-        ]);
 
         $hasher = new MysqlPasswordHasher;
 
@@ -30,7 +25,7 @@ class RegisterController extends Controller
             'login' => $request->login,
             'password' => $hasher->make($request->password),
             'email' => $request->email,
-            'social_id' => substr(md5(uniqid()), 0, 13),
+            'social_id' => $request->social_id,
             'status' => 'OK',
             'create_time' => now(),
         ]);

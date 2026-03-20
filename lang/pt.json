@@ -92,4 +92,14 @@
     "empire_red": "Vermelho",
     "empire_yellow": "Amarelo",
     "empire_blue": "Azul"
+,
+    "register_delete_code": "Codigo de exclusao",
+    "register_delete_code_hint": "Deve conter exatamente 7 digitos"
+,
+    "validation_login_min": "O nome de utilizador deve ter pelo menos 4 caracteres.",
+    "validation_login_max": "O nome de utilizador nao pode exceder 30 caracteres.",
+    "validation_login_unique": "Este nome de utilizador ja esta em uso.",
+    "validation_email_unique": "Este email ja esta registado.",
+    "validation_securitycode_required": "O codigo de exclusao e obrigatorio.",
+    "validation_securitycode_digits": "O codigo deve conter exatamente 7 digitos."
 }

@@ -92,4 +92,14 @@
     "empire_red": "Rosu",
     "empire_yellow": "Galben",
     "empire_blue": "Albastru"
+,
+    "register_delete_code": "Cod Stergere Personaj",
+    "register_delete_code_hint": "Trebuie sa contina exact 7 cifre"
+,
+    "validation_login_min": "Utilizatorul trebuie sa aiba cel putin 4 caractere.",
+    "validation_login_max": "Utilizatorul nu poate depasi 30 de caractere.",
+    "validation_login_unique": "Acest utilizator este deja inregistrat.",
+    "validation_email_unique": "Acest email este deja inregistrat.",
+    "validation_securitycode_required": "Codul de stergere este obligatoriu.",
+    "validation_securitycode_digits": "Codul de stergere trebuie sa contina exact 7 cifre."
 }

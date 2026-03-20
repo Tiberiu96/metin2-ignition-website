@@ -92,4 +92,14 @@
     "empire_red": "Piros",
     "empire_yellow": "Sarga",
     "empire_blue": "Kek"
+,
+    "register_delete_code": "Karakter torlo kod",
+    "register_delete_code_hint": "Pontosan 7 szamjegybol kell allnia"
+,
+    "validation_login_min": "A felhasznalonev legalabb 4 karakter hosszu legyen.",
+    "validation_login_max": "A felhasznalonev legfeljebb 30 karakter lehet.",
+    "validation_login_unique": "Ez a felhasznalonev mar foglalt.",
+    "validation_email_unique": "Ez az e-mail mar regisztralt.",
+    "validation_securitycode_required": "A torlo kod megadasa kotelezo.",
+    "validation_securitycode_digits": "A torlo kodnak pontosan 7 szamjegybol kell allnia."
 }

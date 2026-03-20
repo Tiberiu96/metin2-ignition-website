@@ -92,4 +92,14 @@
     "empire_red": "Czerwone",
     "empire_yellow": "Zolte",
     "empire_blue": "Niebieskie"
+,
+    "register_delete_code": "Kod usuwania postaci",
+    "register_delete_code_hint": "Musi zawierac dokladnie 7 cyfr"
+,
+    "validation_login_min": "Nazwa uzytkownika musi miec co najmniej 4 znaki.",
+    "validation_login_max": "Nazwa uzytkownika nie moze przekraczac 30 znakow.",
+    "validation_login_unique": "Ta nazwa uzytkownika jest juz zajeta.",
+    "validation_email_unique": "Ten adres e-mail jest juz zarejestrowany.",
+    "validation_securitycode_required": "Kod usuwania jest wymagany.",
+    "validation_securitycode_digits": "Kod usuwania musi zawierac dokladnie 7 cyfr."
 }

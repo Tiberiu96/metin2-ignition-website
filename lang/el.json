@@ -92,4 +92,14 @@
     "empire_red": "Kokino",
     "empire_yellow": "Kitrino",
     "empire_blue": "Mple"
+,
+    "register_delete_code": "Kodikos diagrafis",
+    "register_delete_code_hint": "Prepei na periecei akrives 7 psifia"
+,
+    "validation_login_min": "To onoma xristi prepei na echei toulachiston 4 charakteres.",
+    "validation_login_max": "To onoma xristi den mporei na xepernaei ta 30 charakteres.",
+    "validation_login_unique": "Afto to onoma xristi einai idi kateilimmeno.",
+    "validation_email_unique": "Afto to email einai idi kataxorimeno.",
+    "validation_securitycode_required": "O kodikos diagrafis einai ypochreotikos.",
+    "validation_securitycode_digits": "O kodikos prepei na periecei akrives 7 psifia."
 }

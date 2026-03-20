@@ -92,4 +92,14 @@
     "empire_red": "Rojo",
     "empire_yellow": "Amarillo",
     "empire_blue": "Azul"
+,
+    "register_delete_code": "Codigo de eliminacion",
+    "register_delete_code_hint": "Debe contener exactamente 7 digitos"
+,
+    "validation_login_min": "El usuario debe tener al menos 4 caracteres.",
+    "validation_login_max": "El usuario no puede superar 30 caracteres.",
+    "validation_login_unique": "Este usuario ya esta registrado.",
+    "validation_email_unique": "Este email ya esta registrado.",
+    "validation_securitycode_required": "El codigo de eliminacion es obligatorio.",
+    "validation_securitycode_digits": "El codigo debe contener exactamente 7 digitos."
 }

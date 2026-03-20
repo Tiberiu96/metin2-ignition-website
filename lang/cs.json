@@ -92,4 +92,14 @@
     "empire_red": "Cervena",
     "empire_yellow": "Zluta",
     "empire_blue": "Modra"
+,
+    "register_delete_code": "Kod pro smazani postavy",
+    "register_delete_code_hint": "Musi obsahovat presne 7 cislic"
+,
+    "validation_login_min": "Uzivatelske jmeno musi mit alespon 4 znaky.",
+    "validation_login_max": "Uzivatelske jmeno nesmi prekrocit 30 znaku.",
+    "validation_login_unique": "Toto uzivatelske jmeno je jiz obsazeno.",
+    "validation_email_unique": "Tento email je jiz zaregistrovan.",
+    "validation_securitycode_required": "Kod pro smazani je povinny.",
+    "validation_securitycode_digits": "Kod pro smazani musi obsahovat presne 7 cislic."
 }

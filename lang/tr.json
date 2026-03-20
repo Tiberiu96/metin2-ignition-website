@@ -92,4 +92,14 @@
     "empire_red": "Kirmizi",
     "empire_yellow": "Sari",
     "empire_blue": "Mavi"
+,
+    "register_delete_code": "Karakter silme kodu",
+    "register_delete_code_hint": "Tam olarak 7 rakam olmalidir"
+,
+    "validation_login_min": "Kullanici adi en az 4 karakter olmalidir.",
+    "validation_login_max": "Kullanici adi 30 karakteri asamaz.",
+    "validation_login_unique": "Bu kullanici adi zaten alinmis.",
+    "validation_email_unique": "Bu e-posta adresi zaten kayitli.",
+    "validation_securitycode_required": "Silme kodu zorunludur.",
+    "validation_securitycode_digits": "Silme kodu tam olarak 7 rakam olmalidir."
 }

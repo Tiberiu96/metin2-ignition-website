@@ -92,4 +92,14 @@
     "empire_red": "Rood",
     "empire_yellow": "Geel",
     "empire_blue": "Blauw"
+,
+    "register_delete_code": "Karakter verwijdercode",
+    "register_delete_code_hint": "Moet exact 7 cijfers bevatten"
+,
+    "validation_login_min": "Gebruikersnaam moet minimaal 4 tekens bevatten.",
+    "validation_login_max": "Gebruikersnaam mag niet meer dan 30 tekens bevatten.",
+    "validation_login_unique": "Deze gebruikersnaam is al bezet.",
+    "validation_email_unique": "Dit e-mailadres is al geregistreerd.",
+    "validation_securitycode_required": "Verwijdercode is verplicht.",
+    "validation_securitycode_digits": "Verwijdercode moet exact 7 cijfers bevatten."
 }
