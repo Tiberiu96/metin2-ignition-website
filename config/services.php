@@ -45,4 +45,9 @@ return [
         'patch_url' => env('DOWNLOAD_PATCH_URL'),
     ],
 
+    'shop' => [
+        'icons_url' => env('SHOP_ICONS_URL'),
+        'icons_path' => env('SHOP_ICONS_PATH', '/var/www/patches/webshop_icons'),
+    ],
+
 ];

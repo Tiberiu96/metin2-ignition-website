@@ -64,6 +64,13 @@ class AppServiceProvider extends ServiceProvider
                 abort(429, 'Too many download requests. Please try again later.');
             });
         });
+
+        // Item shop: prevent purchase spam
+        RateLimiter::for('shop', function (Request $request) {
+            return Limit::perMinute(50)->by($request->ip())->response(function () {
+                abort(429, 'Too many shop requests. Please try again later.');
+            });
+        });
     }
 
     protected function configureDefaults(): void

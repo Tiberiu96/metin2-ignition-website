@@ -8,6 +8,7 @@ use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RankingController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('throttle:game-read');
@@ -37,6 +38,8 @@ Route::middleware('guest:metin2')->group(function () {
 Route::middleware('auth:metin2')->group(function () {
     Route::get('/account', [AccountController::class, 'show'])->name('account');
     Route::post('/account/password', [AccountController::class, 'changePassword'])->name('account.password')->middleware('throttle:auth');
+    Route::get('/shop', [ShopController::class, 'index'])->name('shop.index')->middleware('throttle:game-read');
+    Route::post('/shop/purchase', [ShopController::class, 'purchase'])->name('shop.purchase')->middleware('throttle:shop');
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

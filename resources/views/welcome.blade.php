@@ -118,7 +118,7 @@
                 </div>
 
                 {{-- Itemshop --}}
-                <a href="#"
+                <a href="{{ route('shop.index') }}"
                    class="flex items-center justify-center gap-2 py-3 rounded text-xs font-bold uppercase tracking-widest transition-colors duration-150"
                    style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border); color: var(--color-accent-400);">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

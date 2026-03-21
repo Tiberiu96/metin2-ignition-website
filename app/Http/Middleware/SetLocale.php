@@ -18,6 +18,10 @@ class SetLocale
 
     public function handle(Request $request, Closure $next): Response
     {
+        if ($request->is('livewire/*', 'admin/*')) {
+            return $next($request);
+        }
+
         $locale = $this->resolveLocale($request);
 
         session(['locale' => $locale]);
