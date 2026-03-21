@@ -56,11 +56,11 @@ class ShopController extends Controller
             ->find($request->input('item_id'));
 
         if (! $shopItem) {
-            return response()->json(['success' => false, 'message' => 'Item not available.'], 404);
+            return response()->json(['success' => false, 'message' => __('shop_item_not_available')], 404);
         }
 
         if ($account->cash < $shopItem->price) {
-            return response()->json(['success' => false, 'message' => 'Not enough coins.'], 400);
+            return response()->json(['success' => false, 'message' => __('shop_not_enough_coins')], 400);
         }
 
         try {
@@ -90,13 +90,13 @@ class ShopController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Purchase successful! Item will be delivered in-game.',
+                'message' => __('shop_purchase_success'),
                 'coins' => $newBalance,
             ]);
         } catch (\Throwable $e) {
             DB::connection('account')->rollBack();
 
-            return response()->json(['success' => false, 'message' => 'Purchase failed. Please try again.'], 500);
+            return response()->json(['success' => false, 'message' => __('shop_purchase_failed')], 500);
         }
     }
 }

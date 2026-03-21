@@ -11,7 +11,7 @@
                     <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
                     </svg>
-                    All Items
+                    {{ __('shop_all_items') }}
                 </a>
                 @foreach($categories as $category)
                     <a href="#{{ $category->slug }}" onclick="filterCategory('{{ $category->slug }}')" id="cat-{{ $category->slug }}"
@@ -39,7 +39,7 @@
         <select id="mobile-category" onchange="filterCategory(this.value)"
                 class="w-full rounded-lg px-3 py-2 text-sm"
                 style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border); color: var(--color-game-text);">
-            <option value="all">All Items</option>
+            <option value="all">{{ __('shop_all_items') }}</option>
             @foreach($categories as $category)
                 <option value="{{ $category->slug }}">{{ $category->name }} ({{ $category->items->count() }})</option>
             @endforeach
@@ -55,7 +55,7 @@
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"/>
                     </svg>
-                    Popular Items
+                    {{ __('shop_popular_items') }}
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
                     @foreach($hotItems as $item)
@@ -69,7 +69,7 @@
                              onmouseout="this.style.borderColor='var(--color-game-border)'">
                             {{-- HOT badge --}}
                             <div class="absolute top-2 right-2 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase" style="background-color: var(--color-accent-600); color: #fff;">
-                                HOT
+                                {{ __('shop_badge_hot') }}
                             </div>
                             {{-- Icon --}}
                             <div class="shrink-0 w-14 h-14 rounded-lg flex items-center justify-center" style="background-color: var(--color-game-surface); border: 1px solid var(--color-game-border);">
@@ -99,12 +99,12 @@
                                         <circle cx="10" cy="10" r="8"/>
                                     </svg>
                                 </div>
-                                <button onclick="purchaseItem({{ $item->id }}, '{{ addslashes($item->name) }}')"
+                                <button onclick="purchaseItem({{ $item->id }}, '{{ addslashes($item->name) }}', {{ $item->price }})"
                                         class="px-4 py-1 rounded text-xs font-semibold uppercase tracking-wide transition-colors cursor-pointer"
-                                        style="background-color: var(--color-accent-600); color: #fff; border: 1px solid var(--color-accent-500);"
-                                        onmouseover="this.style.backgroundColor='var(--color-accent-500)'"
-                                        onmouseout="this.style.backgroundColor='var(--color-accent-600)'">
-                                    Buy
+                                        style="background-color: #1a6b3c; color: #fff; border: 1px solid #23874d;"
+                                        onmouseover="this.style.backgroundColor='#1f7d46'"
+                                        onmouseout="this.style.backgroundColor='#1a6b3c'">
+                                    {{ __('shop_buy') }}
                                 </button>
                             </div>
                         </div>
@@ -163,12 +163,12 @@
                                         <circle cx="10" cy="10" r="8"/>
                                     </svg>
                                 </div>
-                                <button onclick="purchaseItem({{ $item->id }}, '{{ addslashes($item->name) }}')"
+                                <button onclick="purchaseItem({{ $item->id }}, '{{ addslashes($item->name) }}', {{ $item->price }})"
                                         class="px-4 py-1 rounded text-xs font-semibold uppercase tracking-wide transition-colors cursor-pointer"
-                                        style="background-color: var(--color-accent-600); color: #fff; border: 1px solid var(--color-accent-500);"
-                                        onmouseover="this.style.backgroundColor='var(--color-accent-500)'"
-                                        onmouseout="this.style.backgroundColor='var(--color-accent-600)'">
-                                    Buy
+                                        style="background-color: #1a6b3c; color: #fff; border: 1px solid #23874d;"
+                                        onmouseover="this.style.backgroundColor='#1f7d46'"
+                                        onmouseout="this.style.backgroundColor='#1a6b3c'">
+                                    {{ __('shop_buy') }}
                                 </button>
                             </div>
                         </div>
@@ -182,8 +182,8 @@
                 <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
                 </svg>
-                <p class="text-sm">No items available at the moment.</p>
-                <p class="text-xs mt-1">Check back soon!</p>
+                <p class="text-sm">{{ __('shop_no_items') }}</p>
+                <p class="text-xs mt-1">{{ __('shop_check_back') }}</p>
             </div>
         @endif
     </div>
