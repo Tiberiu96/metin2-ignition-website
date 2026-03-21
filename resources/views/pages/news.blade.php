@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 class="text-sm font-bold uppercase tracking-widest mb-6" style="color: var(--color-gold-400)">{{ __('news_title') }}</h1>
+        <h1 class="text-sm font-bold uppercase tracking-widest mb-6" style="color: var(--color-accent-400)">{{ __('news_title') }}</h1>
 
         <div class="flex flex-col gap-4">
             @forelse($news ?? [] as $item)

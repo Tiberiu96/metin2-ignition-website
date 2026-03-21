@@ -6,7 +6,7 @@
     <div class="max-w-sm mx-auto px-4 py-12">
         <div class="rounded p-8 flex flex-col gap-5"
              style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
-            <h1 class="text-sm font-bold uppercase tracking-widest text-center" style="color: var(--color-gold-400)">
+            <h1 class="text-sm font-bold uppercase tracking-widest text-center" style="color: var(--color-accent-400)">
                 {{ __('forgot_password_title') }}
             </h1>
 
@@ -67,13 +67,13 @@
 
                 <button type="submit"
                         class="w-full py-2 mt-2 text-xs font-bold uppercase tracking-widest rounded transition-colors duration-150"
-                        style="background-color: var(--color-gold-600); color: #fff;">
+                        style="background-color: var(--color-accent-600); color: #fff;">
                     {{ __('forgot_password_btn') }}
                 </button>
             </form>
 
             <p class="text-center text-[10px]" style="color: var(--color-game-muted)">
-                <a href="{{ route('login') }}" class="hover:text-[var(--color-gold-400)] transition-colors" style="color: var(--color-game-text)">{{ __('forgot_password_back_login') }}</a>
+                <a href="{{ route('login') }}" class="hover:text-[var(--color-accent-400)] transition-colors" style="color: var(--color-game-text)">{{ __('forgot_password_back_login') }}</a>
             </p>
         </div>
     </div>

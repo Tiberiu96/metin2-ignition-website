@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 class="text-sm font-bold uppercase tracking-widest mb-6" style="color: var(--color-gold-400)">{{ __('ranking_title') }}</h1>
+        <h1 class="text-sm font-bold uppercase tracking-widest mb-6" style="color: var(--color-accent-400)">{{ __('ranking_title') }}</h1>
 
         <div class="rounded overflow-hidden"
              style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
@@ -45,7 +45,7 @@
                             </td>
                             <td class="px-4 py-3 font-semibold" style="color: var(--color-game-text)">{{ $player->name }}</td>
                             <td class="px-4 py-3" style="color: var(--color-game-muted)">{{ $player->job_name }}</td>
-                            <td class="px-4 py-3 text-right font-bold" style="color: var(--color-gold-400)">{{ $player->level }}</td>
+                            <td class="px-4 py-3 text-right font-bold" style="color: var(--color-accent-400)">{{ $player->level }}</td>
                             <td class="px-4 py-3 text-right hidden sm:table-cell" style="color: var(--color-game-muted)">{{ $player->playtime_hours }}h</td>
                             <td class="px-4 py-3 text-right">
                                 @if(isset($empires[$player->empire ?? 0]))

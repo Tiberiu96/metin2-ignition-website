@@ -9,7 +9,7 @@
         <div class="rounded p-6 flex flex-col gap-4"
              style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
 
-            <h1 class="text-sm font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">
+            <h1 class="text-sm font-bold uppercase tracking-widest" style="color: var(--color-accent-400)">
                 {{ __('account_title') }}
             </h1>
 
@@ -49,7 +49,7 @@
         <div class="rounded p-6 flex flex-col gap-4"
              style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
 
-            <h2 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">
+            <h2 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-accent-400)">
                 {{ __('account_characters') }}
             </h2>
 
@@ -62,7 +62,7 @@
                              style="background-color: var(--color-game-bg); border: 1px solid var(--color-game-border);">
                             <span class="font-semibold w-1/3" style="color: var(--color-game-text)">{{ $char->name }}</span>
                             <span class="w-1/4 text-center" style="color: var(--color-game-muted)">{{ $char->job_name }}</span>
-                            <span class="w-1/6 text-center font-bold" style="color: var(--color-gold-400)">Lv. {{ $char->level }}</span>
+                            <span class="w-1/6 text-center font-bold" style="color: var(--color-accent-400)">Lv. {{ $char->level }}</span>
                             <span class="w-1/6 text-right hidden sm:block" style="color: var(--color-game-muted)">{{ $char->playtime_hours }}h</span>
                         </div>
                     @endforeach
@@ -74,7 +74,7 @@
         <div id="password" class="rounded p-6 flex flex-col gap-4"
              style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
 
-            <h2 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">
+            <h2 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-accent-400)">
                 {{ __('change_password_title') }}
             </h2>
 
@@ -117,7 +117,7 @@
 
                 <button type="submit"
                         class="w-full py-2 mt-1 text-xs font-bold uppercase tracking-widest rounded transition-colors duration-150"
-                        style="background-color: var(--color-gold-600); color: #fff;">
+                        style="background-color: var(--color-accent-600); color: #fff;">
                     {{ __('change_password_btn') }}
                 </button>
             </form>
