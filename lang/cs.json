@@ -169,5 +169,8 @@
     "about_stat_drop": "Drop Sazba",
     "about_stat_level": "Max Uroven",
     "about_disclaimer_title": "Prohlaseni",
-    "about_disclaimer_text": "Metin2Ignition je neoficialni fanouskovsky projekt a neni spojen s NCSoft ani Webzen. Metin2 je registrovana ochrana znacka prislusnych vlastniku."
+    "about_disclaimer_text": "Metin2Ignition je neoficialni fanouskovsky projekt a neni spojen s NCSoft ani Webzen. Metin2 je registrovana ochrana znacka prislusnych vlastniku.",
+    "download_size": "Velikost",
+    "download_note": "Poznamka",
+    "download_antivirus_note": "Pokud se patcher nespusti, muze byt blokovan vasim antivirem. Pridejte jej do seznamu vyjimek nebo docasne vypnete antivir."
 }

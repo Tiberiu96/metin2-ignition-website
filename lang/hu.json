@@ -169,5 +169,8 @@
     "about_stat_drop": "Drop Rata",
     "about_stat_level": "Max Szint",
     "about_disclaimer_title": "Nyilatkozat",
-    "about_disclaimer_text": "A Metin2Ignition egy nem hivatalos rajongoi projekt, es nem all kapcsolatban az NCSoft-tal vagy a Webzen-nel. A Metin2 a tulajdonosok bejegyzett vedjegye."
+    "about_disclaimer_text": "A Metin2Ignition egy nem hivatalos rajongoi projekt, es nem all kapcsolatban az NCSoft-tal vagy a Webzen-nel. A Metin2 a tulajdonosok bejegyzett vedjegye.",
+    "download_size": "Meret",
+    "download_note": "Megjegyzes",
+    "download_antivirus_note": "Ha a patcher nem indul el, lehetseges, hogy a virusirto blokkolja. Add hozza a kivetellistadhoz, vagy ideiglenesen kapcsold ki a virusirtot."
 }

@@ -169,5 +169,8 @@
     "about_stat_drop": "Tasso Drop",
     "about_stat_level": "Livello Massimo",
     "about_disclaimer_title": "Avvertenza",
-    "about_disclaimer_text": "Metin2Ignition e un progetto di fan non ufficiale e non e affiliato a NCSoft o Webzen. Metin2 e un marchio registrato dei rispettivi proprietari."
+    "about_disclaimer_text": "Metin2Ignition e un progetto di fan non ufficiale e non e affiliato a NCSoft o Webzen. Metin2 e un marchio registrato dei rispettivi proprietari.",
+    "download_size": "Dimensione",
+    "download_note": "Nota",
+    "download_antivirus_note": "Se il patcher non si avvia, potrebbe essere bloccato dal tuo antivirus. Aggiungilo alla lista delle eccezioni o disattiva temporaneamente l'antivirus."
 }

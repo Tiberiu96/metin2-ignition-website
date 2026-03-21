@@ -169,5 +169,8 @@
     "about_stat_drop": "Taux Drop",
     "about_stat_level": "Niveau Max",
     "about_disclaimer_title": "Avertissement",
-    "about_disclaimer_text": "Metin2Ignition est un projet de fans non officiel et n'est pas affilie a NCSoft ou Webzen. Metin2 est une marque deposee de ses proprietaires respectifs."
+    "about_disclaimer_text": "Metin2Ignition est un projet de fans non officiel et n'est pas affilie a NCSoft ou Webzen. Metin2 est une marque deposee de ses proprietaires respectifs.",
+    "download_size": "Taille",
+    "download_note": "Remarque",
+    "download_antivirus_note": "Si le patcher ne demarre pas, il est peut-etre bloque par votre antivirus. Ajoutez-le a votre liste d'exceptions ou desactivez temporairement votre antivirus."
 }

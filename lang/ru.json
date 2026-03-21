@@ -169,5 +169,8 @@
     "about_stat_drop": "Reyt Drop",
     "about_stat_level": "Maks Uroven",
     "about_disclaimer_title": "Otvetstvennost",
-    "about_disclaimer_text": "Metin2Ignition — eto neofitsialnyy fanatskiy proekt, ne svyazannyy s NCSoft ili Webzen. Metin2 yavlyayetsya zaregistrirovannoy torgovoy markoy sootveystvuyushchikh vladeltsev."
+    "about_disclaimer_text": "Metin2Ignition — eto neofitsialnyy fanatskiy proekt, ne svyazannyy s NCSoft ili Webzen. Metin2 yavlyayetsya zaregistrirovannoy torgovoy markoy sootveystvuyushchikh vladeltsev.",
+    "download_size": "Razmer",
+    "download_note": "Primechanie",
+    "download_antivirus_note": "Yesli patcher ne zapuskayetsya, vozmozhno, on zablokirovan vashim antivirusom. Dobavte yego v spisok isklyucheniy ili vremenno otklyuchite antivirus."
 }

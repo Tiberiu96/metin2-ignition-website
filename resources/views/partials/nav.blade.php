@@ -13,26 +13,26 @@
             <div class="hidden md:flex items-center gap-1 flex-1">
                 <a href="{{ route('home') }}"
                    class="px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-colors duration-150
-                          {{ request()->routeIs('home') ? 'text-[var(--color-gold-400)]' : 'text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]' }}">
+                          {{ request()->routeIs('home') ? 'text-[var(--color-accent-400)]' : 'text-[var(--color-game-text)] hover:text-[var(--color-accent-400)]' }}">
                     {{ __('nav_home') }}
                 </a>
                 <a href="{{ route('register') }}"
                    class="px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-colors duration-150
-                          {{ request()->routeIs('register') ? 'text-[var(--color-gold-400)]' : 'text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]' }}">
+                          {{ request()->routeIs('register') ? 'text-[var(--color-accent-400)]' : 'text-[var(--color-game-text)] hover:text-[var(--color-accent-400)]' }}">
                     {{ __('nav_registration') }}
                 </a>
                 <a href="{{ route('download') }}"
                    class="px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-colors duration-150
-                          {{ request()->routeIs('download') ? 'text-[var(--color-gold-400)]' : 'text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]' }}">
+                          {{ request()->routeIs('download') ? 'text-[var(--color-accent-400)]' : 'text-[var(--color-game-text)] hover:text-[var(--color-accent-400)]' }}">
                     {{ __('nav_download') }}
                 </a>
                 <a href="{{ route('ranking') }}"
                    class="px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-colors duration-150
-                          {{ request()->routeIs('ranking') ? 'text-[var(--color-gold-400)]' : 'text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]' }}">
+                          {{ request()->routeIs('ranking') ? 'text-[var(--color-accent-400)]' : 'text-[var(--color-game-text)] hover:text-[var(--color-accent-400)]' }}">
                     {{ __('nav_ranking') }}
                 </a>
                 <a href="#" target="_blank"
-                   class="px-4 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-gold-400)] transition-colors duration-150">
+                   class="px-4 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-accent-400)] transition-colors duration-150">
                     {{ __('nav_discord') }}
                 </a>
             </div>
@@ -44,7 +44,7 @@
                     <a href="{{ route('account') }}"
                        class="hidden md:inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest transition-colors duration-150
                               {{ request()->routeIs('account') ? '' : 'hover:opacity-80' }}"
-                       style="color: var(--color-gold-400)">
+                       style="color: var(--color-accent-400)">
                         {{ Auth::guard('metin2')->user()->login }}
                     </a>
                     <form method="POST" action="{{ route('logout') }}" class="hidden md:inline">
@@ -52,7 +52,7 @@
                         <button type="submit"
                                 class="px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded border transition-colors duration-150
                                        border-[var(--color-game-border)] text-[var(--color-game-muted)]
-                                       hover:border-[var(--color-gold-500)] hover:text-[var(--color-gold-400)]">
+                                       hover:border-[var(--color-accent-500)] hover:text-[var(--color-accent-400)]">
                             {{ __('nav_logout') }}
                         </button>
                     </form>
@@ -60,7 +60,7 @@
                     <a href="{{ route('login') }}"
                        class="hidden md:inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded
                               border border-[var(--color-game-border)] text-[var(--color-game-text)]
-                              hover:border-[var(--color-gold-500)] hover:text-[var(--color-gold-400)] transition-colors duration-150">
+                              hover:border-[var(--color-accent-500)] hover:text-[var(--color-accent-400)] transition-colors duration-150">
                         {{ __('nav_login') }}
                     </a>
                 @endauth
@@ -91,7 +91,7 @@
 
                     <button id="lang-toggle"
                             class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded border transition-colors duration-150
-                                   border-[var(--color-game-border)] text-[var(--color-game-text)] hover:border-[var(--color-gold-500)]">
+                                   border-[var(--color-game-border)] text-[var(--color-game-text)] hover:border-[var(--color-accent-500)]">
                         <span>{{ $currentLang['flag'] }}</span>
                         <span>{{ $currentLang['label'] }}</span>
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -105,7 +105,7 @@
                         @foreach($languages as $locale => $lang)
                             <a href="?lang={{ $locale }}"
                                class="flex items-center gap-2 px-3 py-2 text-xs transition-colors duration-150
-                                      {{ $current === $locale ? 'text-[var(--color-gold-400)]' : 'text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]' }}"
+                                      {{ $current === $locale ? 'text-[var(--color-accent-400)]' : 'text-[var(--color-game-text)] hover:text-[var(--color-accent-400)]' }}"
                                style="{{ $current === $locale ? 'background-color: var(--color-game-surface);' : '' }}">
                                 <span>{{ $lang['flag'] }}</span>
                                 <span>{{ $lang['label'] }}</span>
@@ -126,21 +126,21 @@
         {{-- Mobile menu --}}
         <div id="nav-mobile" class="hidden md:hidden pb-3">
             <div class="flex flex-col gap-1 pt-2" style="border-top: 1px solid var(--color-game-border);">
-                <a href="{{ route('home') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]">{{ __('nav_home') }}</a>
-                <a href="{{ route('register') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]">{{ __('nav_registration') }}</a>
-                <a href="{{ route('download') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]">{{ __('nav_download') }}</a>
-                <a href="{{ route('ranking') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]">{{ __('nav_ranking') }}</a>
-                <a href="#" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-gold-400)]">{{ __('nav_discord') }}</a>
+                <a href="{{ route('home') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-accent-400)]">{{ __('nav_home') }}</a>
+                <a href="{{ route('register') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-accent-400)]">{{ __('nav_registration') }}</a>
+                <a href="{{ route('download') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-accent-400)]">{{ __('nav_download') }}</a>
+                <a href="{{ route('ranking') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-accent-400)]">{{ __('nav_ranking') }}</a>
+                <a href="#" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-text)] hover:text-[var(--color-accent-400)]">{{ __('nav_discord') }}</a>
                 @auth('metin2')
-                    <a href="{{ route('account') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest" style="color: var(--color-gold-400)">{{ Auth::guard('metin2')->user()->login }}</a>
+                    <a href="{{ route('account') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest" style="color: var(--color-accent-400)">{{ Auth::guard('metin2')->user()->login }}</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="w-full text-left px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-muted)] hover:text-[var(--color-gold-400)]">
+                        <button type="submit" class="w-full text-left px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-game-muted)] hover:text-[var(--color-accent-400)]">
                             {{ __('nav_logout') }}
                         </button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-gold-400)]">{{ __('nav_login') }}</a>
+                    <a href="{{ route('login') }}" class="px-3 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-accent-400)]">{{ __('nav_login') }}</a>
                 @endauth
             </div>
         </div>

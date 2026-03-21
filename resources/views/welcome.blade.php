@@ -56,11 +56,11 @@
             <div class="stats-bar">
                 @foreach ($statItems as $stat)
                     <div class="stat-item">
-                        <svg width="20" height="20" style="color: var(--color-gold-500); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg width="20" height="20" style="color: var(--color-accent-500); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="{{ $stat['icon'] }}"/>
                         </svg>
                         <span style="color: var(--color-game-muted); font-size: 0.7rem; white-space: nowrap;">{{ $stat['label'] }}</span>
-                        <span style="color: var(--color-gold-400); font-size: 0.95rem; font-weight: 700;">{{ $stat['value'] }}</span>
+                        <span style="color: var(--color-accent-400); font-size: 0.95rem; font-weight: 700;">{{ $stat['value'] }}</span>
                     </div>
                 @endforeach
             </div>
@@ -80,7 +80,7 @@
                 <div class="rounded p-4 flex flex-col gap-3"
                      style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
                     @auth('metin2')
-                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">{{ __('panel_welcome') }}</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-accent-400)">{{ __('panel_welcome') }}</h3>
                         <a href="{{ route('account') }}" class="text-xs font-semibold hover:opacity-80 transition-opacity" style="color: var(--color-game-text)">{{ Auth::guard('metin2')->user()->login }}</a>
                         <a href="{{ route('account') }}"
                            class="w-full py-2 text-xs font-bold uppercase tracking-widest rounded text-center transition-colors duration-150"
@@ -96,7 +96,7 @@
                             </button>
                         </form>
                     @else
-                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">{{ __('panel_login_panel') }}</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-accent-400)">{{ __('panel_login_panel') }}</h3>
                         <form method="POST" action="{{ route('login') }}" class="flex flex-col gap-2">
                             @csrf
                             <input type="text" name="login" placeholder="{{ __('panel_username') }}"
@@ -107,7 +107,7 @@
                                    style="background-color: var(--color-game-bg); border: 1px solid var(--color-game-border); color: var(--color-game-text);">
                             <button type="submit"
                                     class="w-full py-2 text-xs font-bold uppercase tracking-widest rounded transition-colors duration-150"
-                                    style="background-color: var(--color-gold-600); color: #fff;">
+                                    style="background-color: var(--color-accent-600); color: #fff;">
                                 {{ __('panel_login') }}
                             </button>
                         </form>
@@ -120,7 +120,7 @@
                 {{-- Itemshop --}}
                 <a href="#"
                    class="flex items-center justify-center gap-2 py-3 rounded text-xs font-bold uppercase tracking-widest transition-colors duration-150"
-                   style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border); color: var(--color-gold-400);">
+                   style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border); color: var(--color-accent-400);">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 11H4L5 9z"/>
                     </svg>
@@ -132,7 +132,7 @@
                      style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
                     <div class="flex items-center justify-between px-4 py-2"
                          style="border-bottom: 1px solid var(--color-game-border);">
-                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">{{ __('panel_ranking') }}</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-accent-400)">{{ __('panel_ranking') }}</h3>
                         <a href="{{ route('ranking') }}"
                            class="text-[10px] transition-colors hover:text-[var(--color-game-text)]"
                            style="color: var(--color-game-muted)">
@@ -172,7 +172,7 @@
                                         @endif
                                     </td>
                                     <td class="px-3 py-1.5" style="color: var(--color-game-text)">{{ $player->name }}</td>
-                                    <td class="px-3 py-1.5 text-right font-bold" style="color: var(--color-gold-400)">{{ $player->level }}</td>
+                                    <td class="px-3 py-1.5 text-right font-bold" style="color: var(--color-accent-400)">{{ $player->level }}</td>
                                     <td class="px-3 py-1.5 text-right w-8">
                                         @if(isset($homeEmpires[$player->empire ?? 0]))
                                             <img src="{{ $homeEmpires[$player->empire] }}" alt="empire" class="w-4 h-4 object-contain inline-block">
@@ -184,7 +184,7 @@
                                     <tr style="border-bottom: 1px solid var(--color-game-border);">
                                         <td class="px-3 py-1.5" style="color: var(--color-game-muted)">{{ $i }}</td>
                                         <td class="px-3 py-1.5" style="color: var(--color-game-text)">—</td>
-                                        <td class="px-3 py-1.5 text-right font-bold" style="color: var(--color-gold-400)">—</td>
+                                        <td class="px-3 py-1.5 text-right font-bold" style="color: var(--color-accent-400)">—</td>
                                         <td class="px-3 py-1.5"></td>
                                     </tr>
                                 @endfor
@@ -202,7 +202,7 @@
                      style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
                     <div class="px-4 py-3 flex items-center justify-between"
                          style="border-bottom: 1px solid var(--color-game-border);">
-                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">{{ __('panel_community') }}</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-accent-400)">{{ __('panel_community') }}</h3>
                         <a href="#" target="_blank"
                            class="flex items-center gap-1.5 px-3 py-1 rounded text-[10px] font-semibold text-white transition-opacity hover:opacity-80"
                            style="background-color: #5865F2;">
@@ -241,7 +241,7 @@
                 <div class="rounded overflow-hidden"
                      style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
                     <div class="px-4 py-3" style="border-bottom: 1px solid var(--color-game-border);">
-                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">{{ __('panel_announcements') }}</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-accent-400)">{{ __('panel_announcements') }}</h3>
                     </div>
 
                     <div class="flex flex-col">
@@ -276,7 +276,7 @@
                     <div class="px-4 py-3">
                         <a href="{{ route('news') }}"
                            class="block text-center text-[10px] font-semibold uppercase tracking-widest transition-colors
-                                  hover:text-[var(--color-gold-400)]"
+                                  hover:text-[var(--color-accent-400)]"
                            style="color: var(--color-game-muted)">
                             {{ __('panel_see_all_news') }}
                         </a>
@@ -286,7 +286,7 @@
                 {{-- Server info --}}
                 <div class="rounded p-4 flex flex-col gap-3"
                      style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
-                    <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-gold-400)">{{ __('panel_server_info') }}</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-accent-400)">{{ __('panel_server_info') }}</h3>
                     <div class="flex flex-col gap-2 text-xs">
                         @foreach ([
                             __('panel_game_type')  => 'PVM / PVP',

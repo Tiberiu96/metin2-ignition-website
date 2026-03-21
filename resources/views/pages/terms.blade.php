@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 class="text-lg font-bold uppercase tracking-widest text-center" style="color: var(--color-gold-400); margin-bottom: 4rem;">{{ __('terms_title') }}</h1>
+        <h1 class="text-lg font-bold uppercase tracking-widest text-center" style="color: var(--color-accent-400); margin-bottom: 4rem;">{{ __('terms_title') }}</h1>
 
         <div class="flex flex-col gap-6 text-xs leading-relaxed" style="color: var(--color-game-muted);">
 

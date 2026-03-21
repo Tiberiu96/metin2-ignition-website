@@ -169,5 +169,8 @@
     "about_stat_drop": "Taxa Drop",
     "about_stat_level": "Nivel Maximo",
     "about_disclaimer_title": "Aviso Legal",
-    "about_disclaimer_text": "Metin2Ignition e um projeto de fas nao oficial e nao e afiliado a NCSoft ou Webzen. Metin2 e uma marca registrada de seus respectivos proprietarios."
+    "about_disclaimer_text": "Metin2Ignition e um projeto de fas nao oficial e nao e afiliado a NCSoft ou Webzen. Metin2 e uma marca registrada de seus respectivos proprietarios.",
+    "download_size": "Tamanho",
+    "download_note": "Nota",
+    "download_antivirus_note": "Se o patcher nao iniciar, pode estar sendo bloqueado pelo seu antivirus. Adicione-o a lista de excecoes ou desative temporariamente o antivirus."
 }

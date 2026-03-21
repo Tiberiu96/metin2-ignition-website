@@ -169,5 +169,8 @@
     "about_stat_drop": "Drop Orani",
     "about_stat_level": "Maks Seviye",
     "about_disclaimer_title": "Yasal Uyari",
-    "about_disclaimer_text": "Metin2Ignition resmi olmayan bir hayran projesidir ve NCSoft veya Webzen ile baglantili degildir. Metin2, ilgili sahiplerinin tescilli bir ticari markadır."
+    "about_disclaimer_text": "Metin2Ignition resmi olmayan bir hayran projesidir ve NCSoft veya Webzen ile baglantili degildir. Metin2, ilgili sahiplerinin tescilli bir ticari markadır.",
+    "download_size": "Boyut",
+    "download_note": "Not",
+    "download_antivirus_note": "Patcher baslamazsa, antivirusuunuz tarafindan engellenebilir. Istisna listesine ekleyin veya guncelleme islemi sirasinda antivirusu gecici olarak devre disi birakin."
 }

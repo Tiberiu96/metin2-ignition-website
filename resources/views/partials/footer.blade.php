@@ -3,7 +3,7 @@
         <div class="flex flex-col items-center gap-6">
 
             {{-- Logo --}}
-            <span class="text-2xl font-bold tracking-widest" style="color: var(--color-gold-400);">
+            <span class="text-2xl font-bold tracking-widest" style="color: var(--color-accent-400);">
                 {{ config('app.name', 'IGNITION') }}
             </span>
 
