@@ -15,7 +15,7 @@
                     <p class="text-[10px]" style="color: var(--color-game-muted)">{{ __('download_full_client_desc') }}</p>
                     <p class="text-[10px]" style="color: var(--color-game-muted)">{{ __('download_size') }}: ~1.8 GB</p>
                 </div>
-                <a href="#"
+                <a href="{{ route('download.client') }}"
                    class="shrink-0 flex items-center gap-2 px-5 py-2 rounded text-xs font-bold uppercase tracking-widest transition-colors duration-150"
                    style="background-color: var(--color-accent-600); color: #fff;">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -32,7 +32,7 @@
                     <p class="text-[10px]" style="color: var(--color-game-muted)">{{ __('download_patch_only_desc') }}</p>
                     <p class="text-[10px]" style="color: var(--color-game-muted)">{{ __('download_size') }}: ~160 MB</p>
                 </div>
-                <a href="#"
+                <a href="{{ route('download.patch') }}"
                    class="shrink-0 flex items-center gap-2 px-5 py-2 rounded text-xs font-bold uppercase tracking-widest transition-colors duration-150"
                    style="background-color: var(--color-game-surface); border: 1px solid var(--color-game-border); color: var(--color-game-text);">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

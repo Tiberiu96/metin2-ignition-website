@@ -36,8 +36,13 @@ return [
     ],
 
     'discord' => [
-        'server_id'  => env('DISCORD_SERVER_ID'),
+        'server_id' => env('DISCORD_SERVER_ID'),
         'channel_id' => env('DISCORD_CHANNEL_ID'),
+    ],
+
+    'downloads' => [
+        'client_url' => env('DOWNLOAD_CLIENT_URL'),
+        'patch_url' => env('DOWNLOAD_PATCH_URL'),
     ],
 
 ];
