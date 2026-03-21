@@ -113,7 +113,7 @@
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm rounded-xl p-6 shadow-2xl"
              style="background-color: var(--color-game-panel); border: 1px solid var(--color-game-border);">
             <h3 class="text-base font-semibold mb-4" style="color: var(--color-game-text);">{{ __('shop_confirm_purchase') }}</h3>
-            <div class="flex items-center gap-3 mb-5 p-3 rounded-lg" style="background-color: var(--color-game-surface); border: 1px solid var(--color-game-border);">
+            <div class="flex items-center gap-3 mb-6 p-4 rounded-lg" style="background-color: var(--color-game-surface); border: 1px solid var(--color-game-border);">
                 <div class="flex-1 min-w-0">
                     <p id="modal-item-name" class="text-sm font-medium truncate" style="color: var(--color-game-text);"></p>
                 </div>
