@@ -36,43 +36,33 @@
     {{-- ═══════════════════════════════════════════════════════════════
          STATS BAR
     ═══════════════════════════════════════════════════════════════ --}}
+    <style>
+        .stats-bar { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem 2.5rem; width: 100%; }
+        .stat-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.2rem; }
+        @media (min-width: 640px) { .stats-bar { gap: 1rem 3.5rem; } }
+    </style>
     <section style="background-color: var(--color-game-surface); border-bottom: 1px solid var(--color-game-border);">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <div class="flex flex-wrap items-center justify-between gap-4">
-                <div class="flex flex-wrap items-center gap-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            @php
+                $statItems = [
+                    ['icon' => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',                                                                           'value' => $stats['online'] ?? 0,    'label' => __('stats_players_online')],
+                    ['icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',                                                                                                    'value' => $stats['online_24h'] ?? 0, 'label' => __('stats_players_online_24h')],
+                    ['icon' => 'M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0m6 2a9 9 0 11-18 0 9 9 0 0118 0z',             'value' => $stats['accounts'] ?? 0,  'label' => __('stats_accounts')],
+                    ['icon' => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',                                                                           'value' => $stats['players'] ?? 0,   'label' => __('stats_players')],
+                    ['icon' => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', 'value' => $stats['guilds'] ?? 0, 'label' => __('stats_guilds')],
+                ];
+            @endphp
 
-                    @php
-                        $statItems = [
-                            ['value' => $stats['online'] ?? 0,    'label' => __('stats_players_online')],
-                            ['value' => $stats['online_24h'] ?? 0, 'label' => __('stats_players_online_24h')],
-                            ['value' => $stats['accounts'] ?? 0,  'label' => __('stats_accounts')],
-                            ['value' => $stats['players'] ?? 0,   'label' => __('stats_players')],
-                            ['value' => $stats['guilds'] ?? 0,    'label' => __('stats_guilds')],
-                        ];
-                    @endphp
-
-                    @foreach ($statItems as $stat)
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4 shrink-0" style="color: var(--color-gold-500)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                            </svg>
-                            <div>
-                                <div class="text-xs font-bold" style="color: var(--color-gold-400)">{{ $stat['value'] }}</div>
-                                <div class="text-[10px] leading-none" style="color: var(--color-game-muted)">{{ $stat['label'] }}</div>
-                            </div>
-                        </div>
-                    @endforeach
-
-                </div>
-
-                <a href="#" target="_blank"
-                   class="flex items-center gap-2 px-4 py-2 rounded text-xs font-semibold text-white transition-opacity hover:opacity-80"
-                   style="background-color: #5865F2;">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.036.056a19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.036-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/>
-                    </svg>
-                    {{ __('nav_discord') }}
-                </a>
+            <div class="stats-bar">
+                @foreach ($statItems as $stat)
+                    <div class="stat-item">
+                        <svg width="20" height="20" style="color: var(--color-gold-500); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="{{ $stat['icon'] }}"/>
+                        </svg>
+                        <span style="color: var(--color-game-muted); font-size: 0.7rem; white-space: nowrap;">{{ $stat['label'] }}</span>
+                        <span style="color: var(--color-gold-400); font-size: 0.95rem; font-weight: 700;">{{ $stat['value'] }}</span>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>

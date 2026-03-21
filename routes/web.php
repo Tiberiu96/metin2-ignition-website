@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::view('/download', 'pages.download')->name('download');
+Route::view('/terms', 'pages.terms')->name('terms');
+Route::view('/refund', 'pages.refund')->name('refund');
+Route::view('/privacy', 'pages.privacy')->name('privacy');
+Route::view('/contact', 'pages.contact')->name('contact');
+Route::view('/about', 'pages.about')->name('about');
 Route::get('/ranking', [RankingController::class, 'index'])->name('ranking');
 Route::get('/news', [NewsController::class, 'index'])->name('news');
 
