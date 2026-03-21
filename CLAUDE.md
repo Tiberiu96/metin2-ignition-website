@@ -17,6 +17,7 @@ Laravel 12 + Filament 3 web platform for **Metin2 Ignition** private server.
 | PHP         | 8.4                                 |
 | DB (web)    | MySQL/MariaDB — `metin2_web` on Ubuntu host |
 | DB (game)   | MariaDB 10.6 on FreeBSD VM (remote) |
+| Cache/Rate  | Redis (phpredis)                    |
 | OS          | Ubuntu Linux (web host)             |
 | Code style  | PSR-12                              |
 
@@ -105,7 +106,8 @@ app/
 │   ├── HomeController.php
 │   ├── RankingController.php
 │   ├── NewsController.php
-│   └── DownloadController.php
+│   ├── DownloadController.php         (redirects to Cloudflare-hosted files)
+│   └── AccountController.php
 ├── Models/
 │   ├── Metin2/Account.php   ($connection = 'account', $timestamps = false)
 │   ├── Metin2/Player.php    ($connection = 'player',  $timestamps = false)
@@ -122,6 +124,31 @@ routes/web.php
 
 ---
 
+## Caching & Rate Limiting
+
+- **Cache driver:** Redis (DB 1), prefix `metin2ignition-cache-`
+- **Rate limiter:** Redis-backed, defined in `AppServiceProvider::configureRateLimiting()`
+- **Rate limits applied:**
+
+| Limiter | Limit | Routes |
+|---------|-------|--------|
+| `auth` | 5/min per IP | `POST /login`, `POST /account/password` |
+| `register` | 3/min per IP | `POST /register` |
+| `password-reset` | 3/min per IP | `POST /forgot-password` |
+| `game-read` | 30/min per IP | `GET /`, `GET /ranking`, `GET /news` |
+| `download` | 5/min per IP | `GET /download/client`, `GET /download/patch` |
+
+---
+
+## Downloads
+
+- Download URLs configured via env: `DOWNLOAD_CLIENT_URL`, `DOWNLOAD_PATCH_URL`
+- Config: `config('services.downloads.client_url')` / `patch_url`
+- Controller: `DownloadController` — redirects to external URL, returns 503 if URL not set
+- Rate limited: 5 requests/min per IP
+
+---
+
 ## Key Constraints
 
 - **Player passwords:** use `MysqlPasswordHasher` — never `md5()` or `Hash::make()`
@@ -133,7 +160,29 @@ routes/web.php
 
 ---
 
+## CSS Custom Properties
+
+Defined in `resources/css/app.css` under `@theme`. **Do not use `gold` prefix — it was renamed to `accent`.**
+
+| Variable | Value | Usage |
+|----------|-------|-------|
+| `--color-accent-400` | `#e03030` | Titles, logo, active nav links |
+| `--color-accent-500` | `#c01e1e` | Hover borders |
+| `--color-accent-600` | `#8b0000` | Buttons (dark red) |
+| `--color-game-bg` | `#080608` | Page background |
+| `--color-game-surface` | `#120a0a` | Footer, secondary surfaces |
+| `--color-game-panel` | `#180e0e` | Cards, panels |
+| `--color-game-border` | `#2e1414` | Borders |
+| `--color-game-text` | `#d4b8b8` | Primary text |
+| `--color-game-muted` | `#7a5555` | Secondary/muted text |
+
+**Important:** Do not name custom colors `--color-red-*` — conflicts with Tailwind v4 built-in palette.
+
+---
+
 ## Workflow — Adding a New Feature
+
+**Static pages:** `/terms`, `/refund`, `/privacy`, `/contact`, `/about` — `Route::view()`, no controller needed
 
 **Public page:** route → controller → model (correct `$connection`) → blade view
 
