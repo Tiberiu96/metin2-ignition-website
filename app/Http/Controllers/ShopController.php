@@ -77,7 +77,7 @@ class ShopController extends Controller
                 'vnum' => $shopItem->vnum,
                 'count' => $shopItem->count,
                 'given_time' => now(),
-                'why' => 'webshop',
+                'why' => '[WEBSHOP]',
                 'mall' => 1,
                 'socket0' => 0,
                 'socket1' => 0,
