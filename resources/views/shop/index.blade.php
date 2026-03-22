@@ -101,9 +101,9 @@
                                 </div>
                                 <button onclick="purchaseItem({{ $item->id }}, '{{ addslashes($item->name) }}', {{ $item->price }})"
                                         class="px-4 py-1 rounded text-xs font-semibold uppercase tracking-wide transition-colors cursor-pointer"
-                                        style="background-color: #1a6b3c; color: #fff; border: 1px solid #23874d;"
-                                        onmouseover="this.style.backgroundColor='#1f7d46'"
-                                        onmouseout="this.style.backgroundColor='#1a6b3c'">
+                                        style="background-color: var(--color-accent-600); color: #fff; border: 1px solid var(--color-accent-500);"
+                                        onmouseover="this.style.backgroundColor='#a01818'"
+                                        onmouseout="this.style.backgroundColor='var(--color-accent-600)'">
                                     {{ __('shop_buy') }}
                                 </button>
                             </div>
@@ -165,9 +165,9 @@
                                 </div>
                                 <button onclick="purchaseItem({{ $item->id }}, '{{ addslashes($item->name) }}', {{ $item->price }})"
                                         class="px-4 py-1 rounded text-xs font-semibold uppercase tracking-wide transition-colors cursor-pointer"
-                                        style="background-color: #1a6b3c; color: #fff; border: 1px solid #23874d;"
-                                        onmouseover="this.style.backgroundColor='#1f7d46'"
-                                        onmouseout="this.style.backgroundColor='#1a6b3c'">
+                                        style="background-color: var(--color-accent-600); color: #fff; border: 1px solid var(--color-accent-500);"
+                                        onmouseover="this.style.backgroundColor='#a01818'"
+                                        onmouseout="this.style.backgroundColor='var(--color-accent-600)'">
                                     {{ __('shop_buy') }}
                                 </button>
                             </div>
