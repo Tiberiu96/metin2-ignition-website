@@ -50,6 +50,11 @@ return [
         'icons_path' => env('SHOP_ICONS_PATH', '/var/www/patches/webshop_icons'),
     ],
 
+    'game' => [
+        'sas_key1' => env('GAME_SAS_KEY1'),
+        'sas_key2' => env('GAME_SAS_KEY2'),
+    ],
+
     'stripe' => [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),

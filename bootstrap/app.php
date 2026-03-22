@@ -13,9 +13,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->web(append: [
-            SetLocale::class,
-        ]);
+        $middleware->web(
+            prepend: [
+                \App\Http\Middleware\DisableLivewireAssets::class,
+            ],
+            append: [
+                SetLocale::class,
+            ],
+        );
 
         $middleware->validateCsrfTokens(except: [
             'stripe/webhook',

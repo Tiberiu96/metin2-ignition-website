@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Auth\GameAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RankingController;
+use App\Http\Controllers\IShopController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +26,8 @@ Route::view('/contact', 'pages.contact')->name('contact');
 Route::view('/about', 'pages.about')->name('about');
 Route::get('/ranking', [RankingController::class, 'index'])->name('ranking')->middleware('throttle:game-read');
 Route::get('/news', [NewsController::class, 'index'])->name('news')->middleware('throttle:game-read');
+
+Route::get('/ishop', [GameAuthController::class, 'ishop'])->name('ishop')->middleware('throttle:auth');
 
 Route::middleware('guest:metin2')->group(function () {
     Route::get('/login', [LoginController::class, 'show'])->name('login');
@@ -47,6 +51,9 @@ Route::middleware('auth:metin2')->group(function () {
     Route::post('/shop/coins/stripe/checkout', [CoinController::class, 'stripeCheckout'])->name('coins.stripe.checkout')->middleware('throttle:shop');
     Route::get('/shop/coins/stripe/success', [CoinController::class, 'stripeSuccess'])->name('coins.stripe.success');
     Route::get('/shop/coins/stripe/cancel', [CoinController::class, 'stripeCancel'])->name('coins.stripe.cancel');
+
+    Route::get('/ishop/browse', [IShopController::class, 'browse'])->name('ishop.browse')->middleware(['throttle:game-read', \App\Http\Middleware\DisableLivewireAssets::class]);
+    Route::post('/ishop/buy', [IShopController::class, 'purchase'])->name('ishop.purchase')->middleware(['throttle:shop', \App\Http\Middleware\DisableLivewireAssets::class]);
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
