@@ -71,7 +71,7 @@
 
         <h1 class="text-xl font-bold mb-6" style="color: var(--color-accent-400);">{{ __('coins_title') }}</h1>
 
-        <p class="text-sm mb-8" style="color: var(--color-game-muted); margin-bottom:20px;">{{ __('coins_select_method') }}</p>
+        <p class="text-sm mb-8" style="color: var(--color-game-muted);">{{ __('coins_select_method') }}</p>
 
         {{-- Payment Method Cards --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
@@ -99,7 +99,7 @@
         </div>
 
         {{-- Stripe Packages Section --}}
-        <div id="section-stripe" class="hidden">
+        <div id="section-stripe" class="hidden mt-2">
             <h2 class="text-base font-semibold mb-4" style="color: var(--color-game-text);">{{ __('coins_select_package') }}</h2>
 
             @if($packages->isEmpty())
