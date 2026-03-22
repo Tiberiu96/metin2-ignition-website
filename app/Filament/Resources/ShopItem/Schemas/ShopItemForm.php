@@ -7,6 +7,8 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -14,8 +16,43 @@ use Illuminate\Support\HtmlString;
 
 class ShopItemForm
 {
+    /** @var array<string, string> */
+    private const LOCALES = [
+        'en' => "\u{1F1EC}\u{1F1E7} English",
+        'de' => "\u{1F1E9}\u{1F1EA} Deutsch",
+        'hu' => "\u{1F1ED}\u{1F1FA} Magyar",
+        'fr' => "\u{1F1EB}\u{1F1F7} Francais",
+        'cs' => "\u{1F1E8}\u{1F1FF} Cestina",
+        'da' => "\u{1F1E9}\u{1F1F0} Dansk",
+        'es' => "\u{1F1EA}\u{1F1F8} Espanol",
+        'el' => "\u{1F1EC}\u{1F1F7} Ellinika",
+        'it' => "\u{1F1EE}\u{1F1F9} Italiano",
+        'nl' => "\u{1F1F3}\u{1F1F1} Nederlands",
+        'pl' => "\u{1F1F5}\u{1F1F1} Polski",
+        'pt' => "\u{1F1F5}\u{1F1F9} Portugues",
+        'ro' => "\u{1F1F7}\u{1F1F4} Romana",
+        'ru' => "\u{1F1F7}\u{1F1FA} Russkij",
+        'tr' => "\u{1F1F9}\u{1F1F7} Turkce",
+    ];
+
     public static function configure(Schema $schema): Schema
     {
+        $tabs = [];
+
+        foreach (self::LOCALES as $locale => $label) {
+            $tabs[] = Tab::make($label)
+                ->schema([
+                    TextInput::make("name.{$locale}")
+                        ->label('Name')
+                        ->maxLength(255),
+
+                    Textarea::make("description.{$locale}")
+                        ->label('Description')
+                        ->rows(2)
+                        ->maxLength(500),
+                ]);
+        }
+
         return $schema->components([
             Select::make('shop_category_id')
                 ->label('Category')
@@ -27,7 +64,6 @@ class ShopItemForm
             Select::make('vnum')
                 ->label('Game Item')
                 ->helperText(new HtmlString('<a href="'.route('filament.admin.pages.item-browser').'" target="_blank" class="text-primary-600 hover:underline">Browse all game items &rarr;</a>'))
-                // Filament Select renders max ~57 options in dropdown; search queries all cached items
                 ->options(fn (): array => static::getItemsWithIcons(collect(static::getCachedItems())->take(57)))
                 ->searchable()
                 ->required()
@@ -59,18 +95,13 @@ class ShopItemForm
                         $items = static::getCachedItems();
                         $label = $items[(int) $state] ?? '';
                         $name = preg_replace('/^\[\d+\]\s*/', '', $label);
-                        $set('name', $name);
+                        $set('name.en', $name);
                     }
                 }),
 
-            TextInput::make('name')
-                ->required()
-                ->maxLength(255)
-                ->helperText('Auto-filled from item selection. You can customize it.'),
-
-            Textarea::make('description')
-                ->rows(2)
-                ->maxLength(500),
+            Tabs::make('Translations')
+                ->tabs($tabs)
+                ->columnSpanFull(),
 
             TextInput::make('price')
                 ->label('Price (coins)')

@@ -14,7 +14,7 @@ class News extends Model
     protected $table = 'news';
 
     /** @var array<int, string> */
-    public array $translatable = ['title', 'excerpt', 'body'];
+    public array $translatable = ['title', 'slug', 'excerpt', 'body'];
 
     protected $fillable = [
         'title',

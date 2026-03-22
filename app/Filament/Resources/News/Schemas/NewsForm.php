@@ -44,11 +44,16 @@ class NewsForm
                         ->label('Title')
                         ->maxLength(255)
                         ->live(onBlur: true)
-                        ->afterStateUpdated(function (string $state, callable $set) use ($locale) {
-                            if ($locale === 'en') {
-                                $set('slug', Str::slug($state));
+                        ->afterStateUpdated(function (?string $state, callable $set) use ($locale) {
+                            if ($state) {
+                                $set("slug.{$locale}", Str::slug($state).'-'.$locale);
                             }
                         }),
+
+                    TextInput::make("slug.{$locale}")
+                        ->label('Slug')
+                        ->maxLength(255)
+                        ->helperText("Auto-generated from title. Format: title-{$locale}"),
 
                     Textarea::make("excerpt.{$locale}")
                         ->label('Excerpt')
@@ -70,11 +75,6 @@ class NewsForm
             Tabs::make('Translations')
                 ->tabs($tabs)
                 ->columnSpanFull(),
-
-            TextInput::make('slug')
-                ->required()
-                ->unique(ignoreRecord: true)
-                ->maxLength(255),
 
             Toggle::make('is_published')
                 ->label('Published')

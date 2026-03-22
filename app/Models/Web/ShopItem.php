@@ -4,10 +4,16 @@ namespace App\Models\Web;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Translatable\HasTranslations;
 
 class ShopItem extends Model
 {
+    use HasTranslations;
+
     protected $connection = 'mysql';
+
+    /** @var array<int, string> */
+    public array $translatable = ['name', 'description'];
 
     protected $fillable = [
         'shop_category_id',

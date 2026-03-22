@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
             SetLocale::class,
         ]);
 
+        $middleware->validateCsrfTokens(except: [
+            'stripe/webhook',
+        ]);
+
         $middleware->alias([
             'honeypot' => VerifyHoneypot::class,
         ]);

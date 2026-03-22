@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CoinController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
@@ -40,6 +41,14 @@ Route::middleware('auth:metin2')->group(function () {
     Route::post('/account/password', [AccountController::class, 'changePassword'])->name('account.password')->middleware('throttle:auth');
     Route::get('/shop', [ShopController::class, 'index'])->name('shop.index')->middleware('throttle:game-read');
     Route::post('/shop/purchase', [ShopController::class, 'purchase'])->name('shop.purchase')->middleware('throttle:shop');
+
+    Route::get('/shop/coins', [CoinController::class, 'index'])->name('coins.index')->middleware('throttle:game-read');
+    Route::post('/shop/coins/coupon', [CoinController::class, 'redeemCoupon'])->name('coins.coupon.redeem')->middleware('throttle:coupon-redeem');
+    Route::post('/shop/coins/stripe/checkout', [CoinController::class, 'stripeCheckout'])->name('coins.stripe.checkout')->middleware('throttle:shop');
+    Route::get('/shop/coins/stripe/success', [CoinController::class, 'stripeSuccess'])->name('coins.stripe.success');
+    Route::get('/shop/coins/stripe/cancel', [CoinController::class, 'stripeCancel'])->name('coins.stripe.cancel');
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::post('/stripe/webhook', [CoinController::class, 'stripeWebhook'])->name('coins.stripe.webhook');

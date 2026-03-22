@@ -50,4 +50,10 @@ return [
         'icons_path' => env('SHOP_ICONS_PATH', '/var/www/patches/webshop_icons'),
     ],
 
+    'stripe' => [
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+    ],
+
 ];

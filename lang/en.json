@@ -94,18 +94,15 @@
     "account_empire": "Empire",
     "empire_red": "Red",
     "empire_yellow": "Yellow",
-    "empire_blue": "Blue"
-,
+    "empire_blue": "Blue",
     "register_delete_code": "Character Delete Code",
-    "register_delete_code_hint": "Must be exactly 7 digits"
-,
+    "register_delete_code_hint": "Must be exactly 7 digits",
     "validation_login_min": "Username must be at least 4 characters.",
     "validation_login_max": "Username cannot exceed 30 characters.",
     "validation_login_unique": "This username is already taken.",
     "validation_email_unique": "This email is already registered.",
     "validation_securitycode_required": "Delete code is required.",
     "validation_securitycode_digits": "Delete code must be exactly 7 digits.",
-
     "terms_title": "Terms of Service",
     "terms_acceptance_title": "Acceptance of Terms",
     "terms_acceptance_text": "By accessing or using this website and game server, you agree to be bound by these Terms of Service. If you do not agree, please discontinue use immediately.",
@@ -125,7 +122,6 @@
     "terms_liability_text": "We provide this service as-is, without any warranties. The server may be modified, reset, or shut down at any time without prior notice. We are not liable for any loss of in-game progress, items, or currency.",
     "terms_ip_title": "Intellectual Property",
     "terms_ip_text": "Metin2 game assets, graphics, and engine are the property of NCSoft and Webzen. All custom content, code, and modifications created by the Metin2Ignition team remain our intellectual property.",
-
     "refund_title": "Refund Policy",
     "refund_general_title": "General Policy",
     "refund_general_text": "All purchases made on Metin2Ignition are considered final. Due to the digital nature of our products, we generally do not offer refunds once a purchase has been completed and items have been delivered to your account.",
@@ -138,7 +134,6 @@
     "refund_process_text": "To request a refund, contact our support team within 7 days of the transaction. Include your account name, transaction ID, date, and a description of the issue. We will review your case and respond within 5 business days.",
     "refund_contact_title": "Contact for Refunds",
     "refund_contact_text": "Send your refund request to: contact@metin2ignition.com — Please include all relevant details to speed up the process.",
-
     "privacy_title": "Privacy Policy (GDPR)",
     "privacy_data_title": "Data We Collect",
     "privacy_data_text": "We collect the following personal data when you register or use our service:",
@@ -163,13 +158,11 @@
     "privacy_cookies_text": "We use only essential session cookies required for authentication. We do not use tracking cookies or third-party advertising cookies.",
     "privacy_contact_title": "Contact (GDPR Requests)",
     "privacy_contact_text": "For any data-related requests, contact us at: contact@metin2ignition.com — We will respond within 30 days as required by GDPR.",
-
     "contact_title": "Contact Us",
     "contact_intro": "Have a question, found a bug, or need support? Reach out to us through one of the channels below. We aim to respond as quickly as possible.",
     "contact_email_label": "Email",
     "contact_discord_label": "Join our Discord server",
     "contact_response_time": "Our average response time is 24-48 hours. For urgent in-game issues, please use our Discord server for faster support.",
-
     "about_title": "About Us",
     "about_who_title": "Who We Are",
     "about_who_text": "Metin2Ignition is a private server project created by a passionate team of Metin2 fans. Our goal is to bring a fresh, balanced, and enjoyable experience to the Metin2 community.",
@@ -180,7 +173,6 @@
     "about_stat_level": "Max Level",
     "about_disclaimer_title": "Disclaimer",
     "about_disclaimer_text": "Metin2Ignition is an unofficial fan project and is not affiliated with NCSoft or Webzen. Metin2 is a registered trademark of its respective owners. All original game assets belong to their rightful owners.",
-
     "shop_title": "Item Shop",
     "shop_coins": "Coins",
     "shop_buy_coins": "Buy Coins",
@@ -202,5 +194,23 @@
     "shop_purchase_success": "Purchase successful! Item will be delivered in-game.",
     "shop_purchase_failed": "Purchase failed. Please try again.",
     "shop_cancel": "Cancel",
-    "shop_confirm": "Confirm"
+    "shop_confirm": "Confirm",
+    "shop_quantity": "Quantity",
+    "shop_total": "Total",
+    "coins_title": "Buy Coins",
+    "coins_back_to_shop": "Back to Shop",
+    "coins_select_method": "Please select a payment method from the options below.",
+    "coins_coupon": "Coupon",
+    "coins_select_package": "Select a coin package",
+    "coins_no_packages": "No packages available at the moment.",
+    "coins_coupon_placeholder": "Enter coupon code",
+    "coins_coupon_submit": "Redeem",
+    "coins_coupon_success": ":coins coins have been added to your account!",
+    "coins_coupon_invalid": "Invalid or expired coupon.",
+    "coins_coupon_used_up": "You have already used this coupon the maximum number of times.",
+    "coins_stripe_error": "Payment error. Please try again.",
+    "coins_package_unavailable": "Package not available.",
+    "coins_purchase_success": "Payment successful! Coins have been added to your account.",
+    "coins_purchase_cancelled": "Payment was cancelled.",
+    "coins_price_note": "Prices shown in local currency are approximate. You will be charged in EUR."
 }

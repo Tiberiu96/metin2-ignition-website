@@ -16,8 +16,9 @@ class ShopCategoryTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable()
-                    ->sortable(),
+                    ->sortable(query: fn ($query, string $direction) => $query->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.en')) {$direction}"))
+                    ->searchable(query: fn ($query, string $search) => $query->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.en')) LIKE ?", ["%{$search}%"]))
+                    ->formatStateUsing(fn ($state) => is_array($state) ? ($state['en'] ?? '') : $state),
 
                 TextColumn::make('slug')
                     ->toggleable(isToggledHiddenByDefault: true),

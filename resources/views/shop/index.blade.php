@@ -83,7 +83,7 @@
                             </div>
                             {{-- Info --}}
                             <div class="flex-1 min-w-0 pr-6">
-                                <h4 class="text-sm font-semibold truncate">{{ $item->name }}</h4>
+                                <h4 class="text-sm font-semibold line-clamp-2">{{ $item->name }}</h4>
                                 @if($item->description)
                                     <p class="text-xs mt-0.5 line-clamp-2" style="color: var(--color-game-muted);">{{ $item->description }}</p>
                                 @endif
@@ -144,12 +144,12 @@
                             </div>
                             {{-- Info --}}
                             <div class="flex-1 min-w-0">
-                                <h4 class="text-sm font-semibold truncate">{{ $item->name }}</h4>
+                                <h4 class="text-sm font-semibold line-clamp-2">{{ $item->name }}</h4>
                                 @if($item->description)
                                     <p class="text-xs mt-0.5 line-clamp-2" style="color: var(--color-game-muted);">{{ $item->description }}</p>
                                 @endif
                                 @if($item->count > 1)
-                                    <span class="text-[10px] mt-0.5 inline-block" style="color: var(--color-game-muted);">x{{ $item->count }}</span>
+                                    <span class="text-xs font-semibold mt-0.5 inline-block" style="color: #fff;">x{{ $item->count }}</span>
                                 @endif
                             </div>
                             {{-- Price + Buy --}}

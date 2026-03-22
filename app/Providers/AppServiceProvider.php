@@ -71,6 +71,13 @@ class AppServiceProvider extends ServiceProvider
                 abort(429, 'Too many shop requests. Please try again later.');
             });
         });
+
+        // Coupon redemption: prevent brute force
+        RateLimiter::for('coupon-redeem', function (Request $request) {
+            return Limit::perMinute(5)->by($request->ip())->response(function () {
+                abort(429, 'Too many coupon attempts. Please try again later.');
+            });
+        });
     }
 
     protected function configureDefaults(): void
