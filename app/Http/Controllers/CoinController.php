@@ -33,12 +33,17 @@ class CoinController extends Controller
             ->get()
             ->map(function (CoinPackage $package) use ($locale) {
                 $display = $this->currencyService->getDisplayPrice((float) $package->price_eur, $locale);
+                $displayOriginal = $package->hasDiscount()
+                    ? $this->currencyService->getDisplayPrice((float) $package->price_eur_original, $locale)
+                    : null;
 
                 return [
                     'id' => $package->id,
                     'coins' => $package->coins,
                     'price_eur' => $package->price_eur,
                     'display_price' => $display,
+                    'display_price_original' => $displayOriginal,
+                    'has_discount' => $package->hasDiscount(),
                 ];
             });
 

@@ -69,12 +69,12 @@
             </div>
         @endif
 
-        <h1 class="text-xl font-bold mb-6" style="color: var(--color-accent-400);">{{ __('coins_title') }}</h1>
+        <h1 class="text-xl font-bold mb-2" style="color: var(--color-accent-400);">{{ __('coins_title') }}</h1>
 
-        <p class="text-sm mb-8" style="color: var(--color-game-muted);">{{ __('coins_select_method') }}</p>
+        <p class="text-sm mb-6" style="color: var(--color-game-muted);">{{ __('coins_select_method') }}</p>
 
         {{-- Payment Method Cards --}}
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
             {{-- Stripe Card --}}
             <button onclick="selectMethod('stripe')" id="method-stripe"
                     class="flex flex-col items-center gap-3 p-6 rounded-xl cursor-pointer transition-all payment-method"
@@ -99,8 +99,8 @@
         </div>
 
         {{-- Stripe Packages Section --}}
-        <div id="section-stripe" class="hidden mt-2">
-            <h2 class="text-base font-semibold mb-4" style="color: var(--color-game-text);">{{ __('coins_select_package') }}</h2>
+        <div id="section-stripe" class="hidden">
+            <h2 class="text-base font-semibold mb-5" style="color: var(--color-game-text);">{{ __('coins_select_package') }}</h2>
 
             @if($packages->isEmpty())
                 <p class="text-sm" style="color: var(--color-game-muted);">{{ __('coins_no_packages') }}</p>
@@ -115,22 +115,29 @@
                                     <circle cx="10" cy="10" r="8"/>
                                 </svg>
                             </div>
-                            <button onclick="buyPackage({{ $package['id'] }})"
-                                    class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-colors cursor-pointer"
-                                    style="background-color: var(--color-accent-600); color: #fff; border: 1px solid var(--color-accent-500);"
-                                    onmouseover="this.style.backgroundColor='#a01818'"
-                                    onmouseout="this.style.backgroundColor='var(--color-accent-600)'">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/>
-                                </svg>
-                                {{ $package['display_price']['formatted'] }}
-                            </button>
+                            <div class="flex flex-col items-end gap-1">
+                                @if($package['has_discount'])
+                                    <span class="text-xs line-through" style="color: var(--color-game-muted);">
+                                        {{ $package['display_price_original']['formatted'] }}
+                                    </span>
+                                @endif
+                                <button onclick="buyPackage({{ $package['id'] }})"
+                                        class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-colors cursor-pointer"
+                                        style="background-color: var(--color-accent-600); color: #fff; border: 1px solid var(--color-accent-500);"
+                                        onmouseover="this.style.backgroundColor='#a01818'"
+                                        onmouseout="this.style.backgroundColor='var(--color-accent-600)'">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/>
+                                    </svg>
+                                    {{ $package['display_price']['formatted'] }}
+                                </button>
+                            </div>
                         </div>
                     @endforeach
                 </div>
 
                 @if($packages->first()['display_price']['currency'] !== 'EUR')
-                    <p class="text-xs mt-3" style="color: var(--color-game-muted);">
+                    <p class="text-xs mt-5" style="color: var(--color-game-muted);">
                         {{ __('coins_price_note') }}
                     </p>
                 @endif

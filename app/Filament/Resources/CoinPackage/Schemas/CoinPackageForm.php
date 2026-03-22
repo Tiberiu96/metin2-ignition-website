@@ -24,6 +24,14 @@ class CoinPackageForm
                 ->minValue(0.01)
                 ->step(0.01),
 
+            TextInput::make('price_eur_original')
+                ->label('Original Price (EUR)')
+                ->numeric()
+                ->minValue(0.01)
+                ->step(0.01)
+                ->nullable()
+                ->helperText('Set higher than Price to show a strikethrough discount'),
+
             TextInput::make('sort_order')
                 ->numeric()
                 ->default(0),

@@ -25,6 +25,12 @@ class CoinPackageTable
                     ->money('EUR')
                     ->sortable(),
 
+                TextColumn::make('price_eur_original')
+                    ->label('Original Price (EUR)')
+                    ->money('EUR')
+                    ->placeholder('—')
+                    ->toggleable(isToggledHiddenByDefault: false),
+
                 TextColumn::make('sort_order')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
