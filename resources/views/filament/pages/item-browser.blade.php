@@ -145,7 +145,7 @@
                                 <span x-show="item.subtype" style="display:inline-block; font-size:12px; font-weight:500; color:#6b7280; background:#f3f4f6; padding:2px 8px; border-radius:6px;" x-text="item.subtype"></span>
                             </td>
                             <td style="padding:8px 16px; text-align:right;">
-                                <img :src="item.icon"
+                                <img x-show="item.icon" :src="item.icon"
                                      style="width:32px; height:32px; object-fit:contain; display:inline-block;"
                                      onerror="this.style.visibility='hidden'" />
                             </td>

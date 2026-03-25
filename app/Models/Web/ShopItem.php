@@ -61,10 +61,17 @@ class ShopItem extends Model
             (string) $this->vnum,
         ];
 
-        $baseVnum = (int) floor($this->vnum / 10) * 10;
-        if ($baseVnum !== $this->vnum) {
-            $candidates[] = str_pad((string) $baseVnum, 5, '0', STR_PAD_LEFT);
-            $candidates[] = (string) $baseVnum;
+        $groupBase = (int) floor($this->vnum / 10) * 10;
+        $groupFirst = $groupBase + 1;
+
+        if ($groupBase !== $this->vnum) {
+            $candidates[] = str_pad((string) $groupBase, 5, '0', STR_PAD_LEFT);
+            $candidates[] = (string) $groupBase;
+        }
+
+        if ($groupFirst !== $this->vnum) {
+            $candidates[] = str_pad((string) $groupFirst, 5, '0', STR_PAD_LEFT);
+            $candidates[] = (string) $groupFirst;
         }
 
         foreach ($candidates as $name) {
@@ -73,6 +80,6 @@ class ShopItem extends Model
             }
         }
 
-        return $iconsUrl.'/'.str_pad((string) $this->vnum, 5, '0', STR_PAD_LEFT).'.png';
+        return null;
     }
 }

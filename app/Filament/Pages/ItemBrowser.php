@@ -51,7 +51,7 @@ class ItemBrowser extends Page
         $iconsPath = config('services.shop.icons_path', '/var/www/patches/webshop_icons');
 
         $browserItems = Cache::remember('item_proto_browser', 3600, function () use ($iconsUrl, $iconsPath): array {
-            return ItemProto::query()
+            $items = ItemProto::query()
                 ->whereNotIn('vnum', [1, 2])
                 ->orderBy('vnum')
                 ->get(['vnum', 'locale_name', 'type', 'subtype'])
@@ -68,17 +68,36 @@ class ItemBrowser extends Page
 
                     $vnum = (int) $row->vnum;
                     $icon = self::resolveIconUrl($vnum, $iconsUrl, $iconsPath);
+                    $baseName = trim(preg_replace('/\s*[\(\+][^)]*\)?\s*$/', '', $name));
 
                     return [
                         'vnum' => $vnum,
                         'name' => $name,
+                        'base_name' => $baseName,
                         'type' => $typeName,
                         'subtype' => $subtypeName,
                         'icon' => $icon,
                     ];
                 })
-                ->values()
                 ->all();
+
+            // Build base_name → icon map from items that already have an icon
+            $baseNameIcons = [];
+            foreach ($items as $item) {
+                if ($item['icon'] && ! isset($baseNameIcons[$item['base_name']])) {
+                    $baseNameIcons[$item['base_name']] = $item['icon'];
+                }
+            }
+
+            // Fill missing icons by base name match
+            foreach ($items as &$item) {
+                if (! $item['icon'] && isset($baseNameIcons[$item['base_name']])) {
+                    $item['icon'] = $baseNameIcons[$item['base_name']];
+                }
+                unset($item['base_name']);
+            }
+
+            return array_values($items);
         });
 
         return [
@@ -86,17 +105,24 @@ class ItemBrowser extends Page
         ];
     }
 
-    private static function resolveIconUrl(int $vnum, string $iconsUrl, string $iconsPath): string
+    private static function resolveIconUrl(int $vnum, string $iconsUrl, string $iconsPath): ?string
     {
         $candidates = [
             str_pad((string) $vnum, 5, '0', STR_PAD_LEFT),
             (string) $vnum,
         ];
 
-        $baseVnum = (int) floor($vnum / 10) * 10;
-        if ($baseVnum !== $vnum) {
-            $candidates[] = str_pad((string) $baseVnum, 5, '0', STR_PAD_LEFT);
-            $candidates[] = (string) $baseVnum;
+        $groupBase = (int) floor($vnum / 10) * 10;
+        $groupFirst = $groupBase + 1;
+
+        if ($groupBase !== $vnum) {
+            $candidates[] = str_pad((string) $groupBase, 5, '0', STR_PAD_LEFT);
+            $candidates[] = (string) $groupBase;
+        }
+
+        if ($groupFirst !== $vnum) {
+            $candidates[] = str_pad((string) $groupFirst, 5, '0', STR_PAD_LEFT);
+            $candidates[] = (string) $groupFirst;
         }
 
         foreach ($candidates as $name) {
@@ -105,6 +131,6 @@ class ItemBrowser extends Page
             }
         }
 
-        return $iconsUrl.'/'.str_pad((string) $vnum, 5, '0', STR_PAD_LEFT).'.png';
+        return null;
     }
 }
