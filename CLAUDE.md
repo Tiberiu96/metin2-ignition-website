@@ -1,5 +1,9 @@
 # Metin2 Ignition - Claude Code Instructions
 
+## Git Rules
+
+**NEVER** run `git commit` or `git push` without explicitly asking the user for confirmation first.
+
 ## Project Overview
 
 Laravel 12 + Filament 3 web platform for **Metin2 Ignition** private server.
