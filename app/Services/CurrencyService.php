@@ -58,9 +58,7 @@ class CurrencyService
 
         return Cache::remember('exchange_rates_eur', $cacheHours * 3600, function () {
             try {
-                $response = Http::timeout(5)->get('https://api.frankfurter.app/latest', [
-                    'from' => 'EUR',
-                ]);
+                $response = Http::timeout(5)->get('https://open.er-api.com/v6/latest/EUR');
 
                 if ($response->successful()) {
                     return $response->json('rates', []);
