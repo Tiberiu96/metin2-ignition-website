@@ -75,14 +75,26 @@ class CoinService
         });
     }
 
-    public function createStripeCheckout(Account $account, CoinPackage $package, string $ip): StripeSession
+    // Currencies Stripe treats as zero-decimal (no subunits)
+    private const ZERO_DECIMAL_CURRENCIES = ['HUF', 'JPY', 'KRW', 'VND', 'BIF', 'CLP', 'GNF', 'MGA', 'PYG', 'RWF', 'UGX', 'VUV', 'XAF', 'XOF', 'XPF'];
+
+    public function createStripeCheckout(Account $account, CoinPackage $package, string $ip, string $locale = 'en'): StripeSession
     {
+        $currencyService = app(CurrencyService::class);
+        $displayPrice = $currencyService->getDisplayPrice((float) $package->price_eur, $locale);
+
+        $currency = strtolower($displayPrice['currency']);
+        $amount = $displayPrice['amount'];
+
+        $isZeroDecimal = in_array(strtoupper($currency), self::ZERO_DECIMAL_CURRENCIES);
+        $unitAmount = $isZeroDecimal ? (int) round($amount) : (int) round($amount * 100);
+
         $transaction = CoinTransaction::query()->create([
             'account_id' => $account->id,
             'type' => TransactionType::Stripe,
             'coins' => $package->coins,
             'amount_eur' => $package->price_eur,
-            'currency' => 'EUR',
+            'currency' => strtoupper($currency),
             'status' => TransactionStatus::Pending,
             'ip_address' => $ip,
         ]);
@@ -93,11 +105,11 @@ class CoinService
             'payment_method_types' => ['card'],
             'line_items' => [[
                 'price_data' => [
-                    'currency' => 'eur',
+                    'currency' => $currency,
                     'product_data' => [
                         'name' => "{$package->coins} Coins - Metin2 Ignition",
                     ],
-                    'unit_amount' => (int) ($package->price_eur * 100),
+                    'unit_amount' => $unitAmount,
                 ],
                 'quantity' => 1,
             ]],

@@ -103,7 +103,8 @@ class CoinController extends Controller
             $session = $this->coinService->createStripeCheckout(
                 $account,
                 $package,
-                $request->ip()
+                $request->ip(),
+                app()->getLocale()
             );
 
             return response()->json([
