@@ -1,235 +1,86 @@
 # Metin2 Ignition - Claude Code Instructions
 
 ## Git Rules
-
 **NEVER** run `git commit` or `git push` without explicitly asking the user for confirmation first.
 
 ## Project Overview
-
-Laravel 12 + Filament 3 web platform for **Metin2 Ignition** private server.
-- Public site: download, ranking, news, registration
-- Admin panel (Filament): player management, events, accounts, CMS
-
----
+Laravel 12 + Filament 3 platform for **Metin2 Ignition** private server. Public site: download, ranking, news, registration. Admin panel (Filament): player management, events, accounts, CMS.
 
 ## Stack
-
-| Layer       | Technology                          |
-|-------------|-------------------------------------|
-| Framework   | Laravel 12                          |
-| Admin panel | Filament 3                          |
-| PHP         | 8.4                                 |
-| DB (web)    | MySQL/MariaDB — `metin2_web` on Ubuntu host |
-| DB (game)   | MariaDB 10.6 on FreeBSD VM (remote) |
-| Cache/Rate  | Redis (phpredis)                    |
-| OS          | Ubuntu Linux (web host)             |
-| Code style  | PSR-12                              |
-
----
-
-## Database Layout
-
-```
-FreeBSD VM (game server)         Ubuntu host (web server)
-────────────────────────         ────────────────────────
-account      ← remote read/write  metin2_web  ← local
-player       ← remote read/write    └── admins        (Filament admin users)
-common       ← remote read-only     └── sessions
-log          ← remote read-only     └── cache
-hotbackup    ← remote read-only     └── (any future web-only tables)
-```
-
-**Nothing is added to the FreeBSD VM databases.** `metin2_web` is owned entirely by Laravel.
-
----
-
-## Authentication — Two Separate Mechanisms
-
-### 1. Players — site login/register (`/login`, `/register`)
-- Guard: `metin2` → `App\Models\Metin2\Account` → `account.accounts` (remote)
-- Password: MySQL `PASSWORD()` via `MysqlPasswordHasher` — **never `Hash::make()` or `md5()`**
-- Session: stored in `metin2_web.sessions`
-
-### 2. Admins — Filament panel (`/admin`)
-- Guard: `web` → `App\Models\Web\Admin` → `metin2_web.admins` (local)
-- Password: bcrypt via `Hash::make()` — standard Laravel
-- Created via `php artisan make:filament-user` or seeder
-
-The two guards are **completely independent**. Player accounts do not grant admin access.
-
-See: `config/auth.php`, `app/Hashing/MysqlPasswordHasher.php`
-
----
-
-## Password Hashing — MysqlPasswordHasher
-
-Replicates MySQL `PASSWORD()`: `'*' . strtoupper(sha1(sha1($value, true)))`
-- 41-char hash starting with `*`
-- Used **only** for the `metin2` guard
-- `needsRehash()` always returns `false`
-
-See: `app/Hashing/MysqlPasswordHasher.php`
-
----
+- **Framework:** Laravel 12, PHP 8.4, Filament 3
+- **DB (web):** MySQL/MariaDB — `metin2_web` (Ubuntu host, local)
+- **DB (game):** MariaDB 10.6 on FreeBSD VM (remote)
+- **Cache/Rate:** Redis (phpredis) | **Code style:** PSR-12
 
 ## Database Connections
-
-Six connections defined in `config/database.php`:
-- `mysql` — local `metin2_web` (Laravel-owned)
-- `account`, `player`, `common`, `log`, `hotbackup` — remote FreeBSD VM, same host/user/pass, different database name
-
-Env vars: `DB_*` for web DB, `METIN2_DB_HOST/PORT/USER/PASS` for game DBs.
-
-**Migrations only against `mysql`:** `php artisan migrate --database=mysql`
-
----
+Six connections in `config/database.php`: `mysql` (local `metin2_web`) + `account`, `player`, `common`, `log`, `hotbackup` (remote FreeBSD VM, same credentials).
+Env: `DB_*` for web, `METIN2_DB_HOST/PORT/USER/PASS` for game DBs.
+**Migrations only:** `php artisan migrate --database=mysql` — never against game DBs.
+**Nothing is added to FreeBSD VM databases.**
 
 ## Database Schema
-
-For full verified schema of all tables and columns, see:
-**`.claude/references/db_schema.md`**
-
-Key facts to remember:
-- `account.account` (NOT `accounts`) — login, password, email, status, availDt (camelCase), empire (unreliable default 0)
+Full schema: `.claude/references/db_schema.md`
+Key facts:
+- `account.account` (NOT `accounts`) — login, password, email, status, availDt (camelCase)
 - `player.player` — NO empire column
-- `player.player_index` — authoritative empire; `id` = account_id, `pid1–4` = character slots
-- To get empire: `LEFT JOIN player_index ON player_index.id = player.account_id`
+- `player.player_index` — authoritative empire; `id`=account_id, `pid1–4`=character slots
+- Empire join: `LEFT JOIN player_index ON player_index.id = player.account_id`
 - `common.gmlist` — GM accounts with mAuthority level
 
----
+## Authentication — Two Separate Guards
+**Players** (`/login`, `/register`): Guard `metin2` → `App\Models\Metin2\Account` → `account.account` (remote).
+Password: MySQL `PASSWORD()` via `MysqlPasswordHasher` — **never `Hash::make()` or `md5()`**.
+Hash formula: `'*' . strtoupper(sha1(sha1($value, true)))`, 41 chars, `needsRehash()` always `false`.
 
-## Project Structure (target)
+**Admins** (`/admin`): Guard `web` → `App\Models\Web\Admin` → `metin2_web.admins` (local).
+Password: bcrypt via `Hash::make()`. Created via `php artisan make:filament-user`.
 
-```
-app/
-├── Filament/Resources/          — AccountResource, PlayerResource, NewsResource, EventResource
-├── Hashing/MysqlPasswordHasher.php
-├── Http/Controllers/
-│   ├── Auth/LoginController.php       (guard: metin2)
-│   ├── Auth/RegisterController.php    (writes to account.accounts)
-│   ├── HomeController.php
-│   ├── RankingController.php
-│   ├── NewsController.php
-│   ├── DownloadController.php         (redirects to Cloudflare-hosted files)
-│   └── AccountController.php
-├── Models/
-│   ├── Metin2/Account.php   ($connection = 'account', $timestamps = false)
-│   ├── Metin2/Player.php    ($connection = 'player',  $timestamps = false)
-│   ├── Metin2/Item.php      ($connection = 'player',  $timestamps = false)
-│   ├── Metin2/Guild.php     ($connection = 'player',  $timestamps = false)
-│   ├── Web/Admin.php        ($connection = 'mysql', FilamentUser)
-│   └── Web/News.php         ($connection = 'mysql')
-└── Services/PlayerService.php
-config/auth.php                  — two guards: web + metin2
-config/database.php              — six connections
-database/migrations/             — only metin2_web tables
-routes/web.php
-```
-
----
-
-## Caching & Rate Limiting
-
-- **Cache driver:** Redis (DB 1), prefix `metin2ignition-cache-`
-- **Rate limiter:** Redis-backed, defined in `AppServiceProvider::configureRateLimiting()`
-- **Rate limits applied:**
-
-| Limiter | Limit | Routes |
-|---------|-------|--------|
-| `auth` | 5/min per IP | `POST /login`, `POST /account/password` |
-| `register` | 3/min per IP | `POST /register` |
-| `password-reset` | 3/min per IP | `POST /forgot-password` |
-| `game-read` | 30/min per IP | `GET /`, `GET /ranking`, `GET /news` |
-| `download` | 5/min per IP | `GET /download/client`, `GET /download/patch` |
-
----
-
-## Downloads
-
-- Download URLs configured via env: `DOWNLOAD_CLIENT_URL`, `DOWNLOAD_PATCH_URL`
-- Config: `config('services.downloads.client_url')` / `patch_url`
-- Controller: `DownloadController` — redirects to external URL, returns 503 if URL not set
-- Rate limited: 5 requests/min per IP
-
----
+Guards are **completely independent**. See: `config/auth.php`, `app/Hashing/MysqlPasswordHasher.php`
 
 ## Key Constraints
-
-- **Player passwords:** use `MysqlPasswordHasher` — never `md5()` or `Hash::make()`
+- **Player passwords:** `MysqlPasswordHasher` only — never `md5()` or `Hash::make()`
 - **Admin passwords:** bcrypt — `Hash::make()`
 - **Game models:** always `public $timestamps = false`
 - **Game DB is live:** prefer reads; writes assume character is offline
-- **social_id** is required and non-null — always generate on registration
-- **Migrations:** never run against game DBs
+- **`social_id`** required, non-null — always generate on registration
 
----
+## Project Structure
+See `.claude/references/project_structure.md`. Models in `app/Models/Metin2/` (game, remote) or `app/Models/Web/` (local).
 
-## CSS Custom Properties
+## CSS / Theme
+Custom properties in `resources/css/app.css` under `@theme`. See `.claude/references/css_theme.md`.
+**After adding new Tailwind classes, always run `npm run build`.**
 
-Defined in `resources/css/app.css` under `@theme`. **Do not use `gold` prefix — it was renamed to `accent`.**
+## Caching & Rate Limiting
+Redis (DB 1), prefix `metin2ignition-cache-`. Limiters in `AppServiceProvider::configureRateLimiting()`:
+`auth` 5/min (POST /login, /account/password) | `register` 3/min | `password-reset` 3/min | `game-read` 30/min (GET /, /ranking, /news) | `download` 5/min (/download/client, /patch)
 
-| Variable | Value | Usage |
-|----------|-------|-------|
-| `--color-accent-400` | `#e03030` | Titles, logo, active nav links |
-| `--color-accent-500` | `#c01e1e` | Hover borders |
-| `--color-accent-600` | `#8b0000` | Buttons (dark red) |
-| `--color-game-bg` | `#080608` | Page background |
-| `--color-game-surface` | `#120a0a` | Footer, secondary surfaces |
-| `--color-game-panel` | `#180e0e` | Cards, panels |
-| `--color-game-border` | `#2e1414` | Borders |
-| `--color-game-text` | `#d4b8b8` | Primary text |
-| `--color-game-muted` | `#7a5555` | Secondary/muted text |
+## Downloads
+Env: `DOWNLOAD_CLIENT_URL`, `DOWNLOAD_PATCH_URL` → `config('services.downloads.client_url/patch_url')`.
+`DownloadController` redirects; returns 503 if URL not set.
 
-**Important:** Do not name custom colors `--color-red-*` — conflicts with Tailwind v4 built-in palette.
+## Internationalization
+Locales: `en`(default), `de`, `hu`, `fr`, `cs`, `da`, `es`, `el`, `it`, `nl`, `pl`, `pt`, `ro`, `ru`, `tr`.
+Detection: `SetLocale` middleware — `?lang=xx` → session → Accept-Language → `en`.
+Files: `lang/{locale}.json`, flat keys e.g. `__('nav_home')`.
+**CRITICAL — NO DIACRITICS:** ASCII only. ă→a, ș→s, ö→o, etc.
 
-### Tailwind v4 — Build Required After New Classes
-
-Tailwind v4 generates **only** the classes detected in source files at build time. If you add a new utility class (e.g. `mb-8`, `mt-5`) to a blade file, it will NOT appear in the compiled CSS until a rebuild is done.
-
-**After adding new Tailwind classes, always run:**
-```bash
-npm run build
-```
-
-Failure to rebuild causes the class to silently have no effect in the browser.
-
----
-
-## Workflow — Adding a New Feature
-
-**Static pages:** `/terms`, `/refund`, `/privacy`, `/contact`, `/about` — `Route::view()`, no controller needed
-
-**Public page:** route → controller → model (correct `$connection`) → blade view
-
-**Admin action:** Filament Resource → `app/Services/` → `Action::make()`
-
-**New game model:** `app/Models/Metin2/`, set `$connection`, `$table`, `$timestamps = false`, conservative `$fillable`
-
----
-
-## Internationalization (i18n)
-
-- **Supported locales:** `en`, `de`, `hu`, `fr`, `cs`, `da`, `es`, `el`, `it`, `nl`, `pl`, `pt`, `ro`, `ru`, `tr`
-- **Default:** `en`
-- **Detection:** `SetLocale` middleware — priority: `?lang=xx` URL param → session → `Accept-Language` header → fallback `en`
-- **Translation files:** `lang/{locale}.json` — flat keys, e.g. `__('nav_home')`
-- **CRITICAL — NO DIACRITICS:** Translation strings must use ASCII only. No ă, â, î, ș, ț, ö, ü, ä, á, é, etc. Replace with closest ASCII equivalent (ă→a, ș→s, ö→o, etc.)
-
----
-
-## Work Phases
-
-Detailed specs in `.claude/phases/`. Complete in order, do not start next phase until current is verified:
-
-1. `.claude/phases/phase-1-foundation.md` — DB connections, auth guards, models, migrations
-2. `.claude/phases/phase-2-public-site.md` — layout, login/register, ranking, news, download
-3. `.claude/phases/phase-3-admin-panel.md` — Filament resources, dashboard widgets
-4. `.claude/phases/phase-4-polish.md` — rate limiting, error pages, SEO, production
-
-===
+## Workflow
+- **Static pages:** `Route::view()`, no controller needed
+- **Public page:** route → controller → model (correct `$connection`) → blade view
+- **Admin action:** Filament Resource → `app/Services/` → `Action::make()`
+- **New game model:** `app/Models/Metin2/`, set `$connection`, `$table`, `$timestamps = false`
 
 ## Screenshots
-Always search screenshots in the /screenshots folder from .claude folder
+Search in `.claude/screenshots/`
+
+## Work Phases
+Specs in `.claude/phases/` — complete in order:
+1. `phase-1-foundation.md` — DB, auth, models, migrations
+2. `phase-2-public-site.md` — layout, login/register, ranking, news, download
+3. `phase-3-admin-panel.md` — Filament resources, dashboard widgets
+4. `phase-4-polish.md` — rate limiting, error pages, SEO, production
+
 ===
 
 <laravel-boost-guidelines>
@@ -350,7 +201,6 @@ This project has domain-specific skills available. You MUST activate the relevan
 - Always use explicit return type declarations for methods and functions.
 - Use appropriate PHP type hints for method parameters.
 
-<!-- Explicit Return Types and Method Params -->
 ```php
 protected function isAccessible(User $user, ?string $path = null): bool
 {
