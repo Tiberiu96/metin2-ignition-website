@@ -14,6 +14,7 @@ class RankingController extends Controller
             return Player::query()
                 ->select(['player.id', 'player.account_id', 'player.name', 'player.job', 'player.level', 'player.exp', 'player.playtime', 'player_index.empire'])
                 ->leftJoin('player_index', 'player_index.id', '=', 'player.account_id')
+                ->excludeStaff()
                 ->orderByDesc('level')
                 ->orderByDesc('exp')
                 ->limit(100)

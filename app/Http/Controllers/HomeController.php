@@ -28,6 +28,7 @@ class HomeController extends Controller
             return Player::query()
                 ->select(['player.id', 'player.account_id', 'player.name', 'player.level', 'player.exp', 'player_index.empire'])
                 ->leftJoin('player_index', 'player_index.id', '=', 'player.account_id')
+                ->excludeStaff()
                 ->orderByDesc('player.level')
                 ->orderByDesc('player.exp')
                 ->limit(10)

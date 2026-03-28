@@ -2,9 +2,11 @@
 
 namespace App\Models\Metin2;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 
 class Player extends Model
 {
@@ -47,6 +49,28 @@ class Player extends Model
         return Attribute::make(
             get: fn () => (int) ($this->playtime / 60),
         );
+    }
+
+    /**
+     * Excludes staff accounts (found in common.gmlist) from the query.
+     *
+     * @param  Builder<Player>  $query
+     * @return Builder<Player>
+     */
+    public function scopeExcludeStaff(Builder $query): Builder
+    {
+        $staffLogins = Cache::remember('gmlist_staff_logins', 300, fn () => GmList::staffLogins());
+
+        if (empty($staffLogins)) {
+            return $query;
+        }
+
+        $staffAccountIds = Account::query()
+            ->whereIn('login', $staffLogins)
+            ->pluck('id')
+            ->all();
+
+        return $query->whereNotIn('player.account_id', $staffAccountIds);
     }
 
     public function account(): BelongsTo
